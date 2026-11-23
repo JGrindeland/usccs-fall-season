@@ -148,7 +148,7 @@ def main():
         changed = True
     # USCCS stat sheet (goals, assists, clean sheets, self-reported cards)
     try:
-        sheet = get(STATS_SHEET, as_json=False).decode("utf-8-sig")
+        sheet = get(STATS_SHEET, as_json=False).decode("utf-8-sig").replace("\r\n", "\n")   # normalize line endings so unchanged sheets compare equal
         spath = DATA / "sheet_stats.csv"
         if "game uid" in sheet.split("\n", 1)[0].lower():
             if not spath.exists() or spath.read_text(encoding="utf-8") != sheet:
