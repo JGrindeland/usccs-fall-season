@@ -1,0 +1,9 @@
+# The page is built by the GitHub Action (scripts/build.py); Netlify only publishes site/.
+[build]
+  publish = "site"
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
