@@ -334,7 +334,7 @@ function stats(){
    ${lead("Best defense", T.filter(r=>r[2]).sort((a,b)=>a[8]/a[2]-b[8]/b[2]||(cs[b[0]]||0)-(cs[a[0]]||0)).slice(0,15), [["Team",r=>tm(r[0],r[1]),"l"],["P",r=>r[2]],["GA",r=>r[8]],["Per game",r=>`<b>${per(r[8],r[2])}</b>`],["Clean sheets",r=>cs[r[0]]||0]])}
    ${lead("Clean sheets (goalkeepers)", top(P,r=>r[7]), [["Player",pl,"l"],["Team",pt,"l hide-sm"],["GP",r=>r[2]],["CS",r=>`<b>${fmtCS(r[7])}</b>`]])}
    ${lead("Discipline", top(P,r=>r[5]+r[6]*3,15), [["Player",pl,"l"],["Team",pt,"l hide-sm"],["Yellow",r=>r[5]],["Red",r=>r[6]]])}
-   ${lead("Team discipline", Object.values(TD).filter(t=>t[1]+t[2]>0).sort((a,b)=>(b[1]+3*b[2])-(a[1]+3*a[2])).slice(0,15), [["Team",r=>tm(r[0]),"l"],["Yellow",r=>r[1]],["Red",r=>r[2]],["Cards per game",r=>`<b>${per(r[1]+r[2],tp[r[0]]||0)}</b>`]])}
+   ${lead("Team discipline", Object.values(TD).filter(t=>t[1]+t[2]>0).map(t=>[...t,(t[1]+t[2])/(tp[t[0]]||1)]).sort((a,b)=>b[3]-a[3]||(b[1]+b[2])-(a[1]+a[2])||b[2]-a[2]).slice(0,15), [["Team",r=>tm(r[0]),"l"],["Yellow",r=>r[1]],["Red",r=>r[2]],["Cards per game",r=>`<b>${per(r[1]+r[2],tp[r[0]]||0)}</b>`]])}
   </div>`;
 }
 
