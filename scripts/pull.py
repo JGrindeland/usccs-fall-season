@@ -12,6 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 SEASONS = [("men", "6a0c976961444a4e0cf2ef71"), ("women", "6a0c979a98c2fde79e7c20cc")]
 API = "https://se-api.sportsengine.com/v3/microsites/"
 DATA = pathlib.Path(__file__).resolve().parent.parent / "data"
+STATS_SHEET = "https://docs.google.com/spreadsheets/d/1W42UPt2QqSjsULjShssKw0vwEBdkp1s4g19iKlZhcEQ/export?format=csv&gid=0"   # RAWresponses tab, "anyone with the link can view"
 UA = {"User-Agent": "USCCS-season-page/1.0 (+https://2026-usccs-fall-season.netlify.app)", "Accept": "application/json"}
 
 
@@ -145,6 +146,21 @@ def main():
             d = json.loads(dpath.read_text()); d["pulled"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
             dpath.write_text(json.dumps(d, separators=(",", ":")))
         changed = True
+    # USCCS stat sheet (goals, assists, clean sheets, self-reported cards)
+    try:
+        sheet = get(STATS_SHEET, as_json=False).decode("utf-8-sig")
+        spath = DATA / "sheet_stats.csv"
+        if "game uid" in sheet.split("\n", 1)[0].lower():
+            if not spath.exists() or spath.read_text(encoding="utf-8") != sheet:
+                spath.write_text(sheet, encoding="utf-8")
+                d = json.loads(dpath.read_text()); d["pulled"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+                dpath.write_text(json.dumps(d, separators=(",", ":")))
+                changed = True
+                print("stat sheet updated", flush=True)
+        else:
+            print("stat sheet download didn't look like the stats tab; keeping the previous copy", flush=True)
+    except Exception as e:
+        print("stat sheet not reachable, keeping the previous copy:", e, flush=True)
     print("CHANGED" if changed else "NO CHANGE")
 
 

@@ -5,7 +5,7 @@ on:
     - cron: "7,37 * * * *"     # every 30 minutes
   workflow_dispatch:            # "Run workflow" button for an on-demand refresh
   push:
-    paths: ["scripts/**", "assets/**"]
+    paths: ["scripts/**", "assets/**", "data/cards.csv"]
 
 permissions:
   contents: write

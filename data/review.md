@@ -1,0 +1,418 @@
+# Stats review
+
+Items from the stat sheet and the card CSV that need a look. The page updates on the next refresh after a fix.
+
+1300 stat submissions matched to 1240 team-games; 2479 CSV cards matched (521 National Championship cards left out); 395 self-reported cards counted
+
+## Cards (CSV) that don't match a SportsEngine game (1)
+
+- 10/18/2026 Virginia: Elias zell – Persistent Offense
+
+## Self-reported cards counted (not in the misconduct CSV) (393)
+
+- Max Stamats (Sep 4 Kentucky vs Tennessee Tech, Kentucky) – yellow
+- Liam Nelson (Sep 5 Marquette vs Michigan Tech, Marquette) – yellow
+- Christian Kinney (Sep 5 Marquette vs Michigan Tech, Marquette) – yellow
+- RJ Makope (Sep 5 Marquette vs Michigan Tech, Marquette) – yellow
+- Diego Carino (Sep 5 UMBC vs Johns Hopkins, UMBC) – yellow
+- Aboubacar Soumare (Sep 5 UMBC vs Johns Hopkins, UMBC) – yellow
+- Carlos Hernandez (Sep 5 Michigan-Flint vs Saginaw Valley State, Michigan-Flint) – yellow
+- Flynn Mcleay (Sep 6 Marquette vs UW-Lacrosse, Marquette) – yellow
+- Landon Socha (Sep 6 Tennessee-Chattanooga vs Tennessee-Black, Tennessee-Chattanooga) – yellow
+- Carson Dant (Sep 6 Nebraska vs Wayne State College, Nebraska) – yellow
+- Alex Pham (Sep 6 Kansas vs Kansas State, Kansas) – yellow
+- Jonathan Griffith (Sep 6 UMBC vs Navy, UMBC) – yellow
+- Moises Ramirez (Sep 6 Tulsa vs Arkansas, Tulsa) – yellow
+- Javi Mosquera (Sep 6 Tulsa vs Arkansas, Tulsa) – yellow
+- Logan Macy (Sep 6 Tennessee-Chattanooga vs Tennessee-Black, Tennessee-Black) – yellow
+- Tess Ipsen (Sep 6 Colorado College vs Colorado-Gold, Colorado-Gold) – yellow
+- Maddison Brossart (Sep 6 Colorado College vs Colorado-Gold, Colorado-Gold) – yellow
+- Jared Bendo (Sep 6 Akron vs Xavier, Akron) – yellow
+- Christian Kesler (Sep 6 Akron vs Xavier, Akron) – yellow
+- Nicholas Riga (Sep 6 Davidson vs South Carolina, South Carolina) – yellow
+- Parker Waskiewicz (Sep 5 Marquette vs Michigan Tech, Michigan Tech) – yellow
+- Robert Tarver (Sep 5 Marquette vs Michigan Tech, Michigan Tech) – yellow
+- Travis Parke (Sep 11 Saint Anselm vs New Hampshire, New Hampshire) – yellow
+- Brodie Reeves (Sep 11 Saint Anselm vs New Hampshire, New Hampshire) – yellow
+- Austen Pallen (Sep 12 Embry Riddle  vs South Florida, Embry Riddle ) – yellow
+- Samuel Benjumea (Sep 12 Embry Riddle  vs South Florida, Embry Riddle ) – yellow
+- Jared Mikloski (Sep 12 Temple vs Kutztown, Kutztown) – yellow
+- Tyler Skrip (Sep 12 Mankato vs Minnesota-Maroon, Mankato) – yellow
+- Cameron Krueger (Sep 12 Davidson vs High Point-Purple, High Point-Purple) – yellow
+- Liam Graham (Sep 12 Davidson vs High Point-Purple, High Point-Purple) – yellow
+- Alexis Avila Bermeo (Sep 12 Columbia vs Stony Brook, Stony Brook) – yellow
+- Jacobo Ariza (Sep 12 Columbia vs Stony Brook, Stony Brook) – yellow
+- Reece Murray (Sep 12 Minnesota-Gold vs Northern Iowa, Northern Iowa) – yellow
+- Tiago Fonseca (Sep 12 UPenn vs The College of New Jersey, The College of New Jersey) – yellow
+- John Hovhannisyan (Sep 12 UPenn vs The College of New Jersey, The College of New Jersey) – yellow
+- Colin Hernandez (Sep 12 North Dakota vs Minot State, North Dakota) – yellow
+- Jadan Heikes (Sep 12 South Dakota State vs North Dakota State, North Dakota State) – yellow
+- Johnbosco Nguyen (Sep 12 Western Michigan vs Saginaw Valley State, Western Michigan) – yellow
+- Jaime Gonzalez (Sep 12 Pittsburg State vs Wichita State, Wichita State) – yellow
+- Faris Alsmadi (Sep 12 Pittsburg State vs Wichita State, Wichita State) – yellow
+- Kaden Chaudhary (Sep 12 Harvard "A" vs Boston College, Harvard "A") – yellow
+- Grady Ames (Sep 12 Harvard "A" vs Boston College, Harvard "A") – yellow
+- Diego Monroy (Sep 11 Albany vs Rensselaer Polytechnic, Rensselaer Polytechnic) – yellow
+- Chisom Ike (Sep 12 Tarleton State vs Texas-Arlington, Texas-Arlington) – red
+- Luke McCabe (Sep 12 New Mexico vs Northern Arizona, New Mexico) – yellow
+- Sebastian Pinto (Sep 12 North Dakota vs Minot State, Minot State) – yellow
+- Ihab Mesbah (Sep 12 New Mexico State vs Texas-El Paso, New Mexico State) – yellow
+- Yoneri Goytia (Sep 12 New Mexico State vs Texas-El Paso, New Mexico State) – yellow
+- Trevin Bussa (Sep 12 South Dakota vs Augustana, South Dakota) – yellow
+- Jace Jandreaj (Sep 12 South Dakota vs Augustana, South Dakota) – yellow
+- Tommy Kim (Sep 12 South Dakota vs Augustana, South Dakota) – yellow
+- Alexander Loera (Sep 12 Cal Poly Pomona vs CSU Northridge, Cal Poly Pomona) – yellow
+- John Whitehouse (Sep 12 New Mexico vs Northern Arizona, Northern Arizona) – yellow
+- Harrison Shields (Sep 12 New Mexico vs Northern Arizona, Northern Arizona) – yellow
+- Antonio Strati (Sep 12 New Mexico vs Northern Arizona, Northern Arizona) – yellow
+- Johnathan Faraday (Sep 12 Wayne State vs Hillsdale, Wayne State) – yellow
+- Sawyer Custodio (Sep 12 South Dakota State vs North Dakota State, South Dakota State) – yellow
+- Colby Hahn (Sep 12 South Dakota State vs North Dakota State, South Dakota State) – yellow
+- Stan Blejwas (Sep 13 Babson vs Harvard "A", Harvard "A") – yellow
+- Alex Okpoyo (Sep 13 Tufts University-Blue vs Brandeis, Tufts University-Blue) – yellow
+- Lukas English (Sep 13 Tufts University-Brown vs Clark, Tufts University-Brown) – yellow
+- Ian Kirk (Sep 13 Elon vs South Carolina, Elon) – yellow
+- Daniel Dictenberg (Sep 13 Elon vs South Carolina, Elon) – yellow
+- Jack Olearcek (Sep 13 Elon vs South Carolina, Elon) – yellow
+- Logan Corriveau (Sep 13 Elon vs South Carolina, Elon) – yellow
+- Sawyer McDonald (Sep 13 Louisiana State vs Sam Houston State, Louisiana State) – yellow
+- Jack Stricker (Sep 13 Central Connecticut State vs Hartford, Central Connecticut State) – yellow
+- Victor Gallegos-Morales (Sep 12 Texas-San Antonio vs St. Edwards, Texas-San Antonio) – yellow
+- Tim Zellner (Sep 13 Kutztown vs Lehigh, Kutztown) – yellow
+- Nicolay Langkaas (Sep 13 Texas Tech vs Texas Christian, Texas Tech) – yellow
+- Carter Tirro (Sep 13 Mississippi vs Alabama, Mississippi) – yellow
+- John Crotty (Sep 13 Mississippi vs Alabama, Mississippi) – yellow
+- Jonathan Lopez (Sep 12 Metro State vs Regis, Regis) – yellow
+- Silas Brooks Hedstrom (Sep 13 Tufts University-Blue vs Brandeis, Brandeis) – yellow
+- Mesay Solomon (Sep 13 Tufts University-Blue vs Brandeis, Brandeis) – yellow
+- Michael Brenner (Sep 13 Wash U vs Saint Louis, Saint Louis) – yellow
+- Nicholas Dawson (Sep 13 Wash U vs Saint Louis, Saint Louis) – yellow
+- Tyler Shepard (Sep 13 Maine vs Bowdoin, Bowdoin) – yellow
+- Oscar Martinez Mendoza (Sep 13 Maine vs Bowdoin, Bowdoin) – yellow
+- alex nieva (Sep 13 AC UConn vs Bryant, Bryant) – yellow
+- Tristan Seguin (Sep 13 Worcester Polytechnic vs Boston University, Worcester Polytechnic) – yellow
+- Noah Mandujano (Sep 11 Northern Illinois vs Illinois State, Northern Illinois) – yellow
+- Gideon Albright (Sep 13 Northern Kentucky vs Cincinnati-B, Cincinnati-B) – yellow
+- christian ramos (Sep 13 Northern Kentucky vs Cincinnati-B, Cincinnati-B) – yellow
+- Charles Curmi (Sep 13 The College of New Jersey vs Villanova, Villanova) – yellow
+- Theo Ochieng (Sep 13 Saint Joseph's vs La Salle, Saint Joseph's) – yellow
+- David Ludian (Sep 13 Saint Joseph's vs La Salle, Saint Joseph's) – yellow
+- Nicholas Brady (Sep 13 Saint Joseph's vs La Salle, Saint Joseph's) – yellow
+- John Tholley (Sep 13 Saint Joseph's vs La Salle, Saint Joseph's) – yellow
+- Abby Chirik (Sep 13 Princeton vs The College of New Jersey, Princeton) – yellow
+- Basirou Boye (Sep 13 Milwaukee School of Engineering vs UW-Stevens Point, Milwaukee School of Engineering) – yellow
+- Sebastian Razo (Sep 13 Texas Tech vs Texas Christian, Texas Christian) – yellow
+- christian Philip (Sep 13 Texas Tech vs Texas Christian, Texas Christian) – yellow
+- Parker Banas (Sep 13 Army West Point vs Champlain, Champlain) – yellow
+- Gesom Mbombo (Sep 13 Army West Point vs Champlain, Champlain) – yellow
+- Will Anderson (Sep 13 Brown vs Providence, Providence) – yellow
+- Nico Rojo (Sep 13 Brown vs Providence, Providence) – yellow
+- Kasey Miranda (Sep 13 Brown vs Providence, Providence) – yellow
+- Ewan McEntee (Sep 13 Brown vs Providence, Providence) – yellow
+- Parker Banas (Sep 13 SUNY New Paltz vs Champlain, Champlain) – yellow
+- Leo Chrapla (Sep 13 SUNY New Paltz vs Champlain, Champlain) – yellow
+- Javon Howse (Sep 12 Western Kentucky vs Tennessee-Chattanooga, Tennessee-Chattanooga) – yellow
+- Finn Martin (Sep 12 Butler vs Toledo, Toledo) – yellow
+- Jj Chadick (Sep 13 Georgia Southern vs Clemson, Clemson) – yellow
+- Gavin Lewis (Sep 13 Georgia Southern vs Clemson, Clemson) – yellow
+- George Njai (Sep 13 Indiana vs Bowling Green State, Bowling Green State) – yellow
+- Emilio Sanchez Pulido (Sep 13 New Haven vs Connecticut College, New Haven) – yellow
+- Alberto De la Parte (Sep 13 New Haven vs Connecticut College, New Haven) – yellow
+- Matthias Zimmerman (Sep 12 Fordham vs Hofstra, Fordham) – yellow
+- Antonio Castillo Fessenko (Sep 12 Fordham vs Hofstra, Fordham) – yellow
+- Enzo Santillan (Sep 12 Fordham vs Hofstra, Fordham) – yellow
+- Enzo Santillan (Sep 12 Fordham vs Hofstra, Fordham) – red
+- Karl Liljert (Sep 12 Fordham vs Hofstra, Fordham) – red
+- Eric Kanse (Sep 12 Connecticut College vs Wesleyan, Connecticut College) – yellow
+- Ethan Pauli (Sep 13 Tulane vs Rice, Tulane) – yellow
+- John Michel (Sep 11 Xavier vs Miami (OH), Miami (OH)) – yellow
+- FaBrice Lunanga (Sep 12 Western Kentucky vs Tennessee-Chattanooga, Western Kentucky) – yellow
+- Hector Martinez (Sep 12 Western Kentucky vs Tennessee-Chattanooga, Western Kentucky) – yellow
+- Darwin Hernandez (Sep 12 Western Kentucky vs Tennessee-Chattanooga, Western Kentucky) – yellow
+- Jackson Morgan (Sep 13 Coastal Carolina "B" vs Appalachian State, Coastal Carolina "B") – red
+- Cameron Krueger (Sep 13 High Point-Purple vs UNC-Charlotte, High Point-Purple) – yellow
+- Bo Hanna (Sep 13 High Point-Purple vs UNC-Charlotte, High Point-Purple) – yellow
+- Aden Si-Ahmed (Sep 12 Georgetown-Blue vs George Washington, Georgetown-Blue) – yellow
+- Case Rumpsa (Sep 13 Michigan Tech vs UW-Milwaukee, Michigan Tech) – yellow
+- Noah Rittinger (Sep 13 Northern Kentucky vs Cincinnati-B, Northern Kentucky) – yellow
+- Noah Beckley (Sep 18 Wright State vs Northern Kentucky, Northern Kentucky) – yellow
+- Noah Walker (Sep 18 Wright State vs Northern Kentucky, Northern Kentucky) – yellow
+- Joe Valdez (Sep 18 Wright State vs Northern Kentucky, Wright State) – yellow
+- Pedro Lanza Abreu (Sep 18 Wright State vs Northern Kentucky, Wright State) – yellow
+- Jay Connor (Sep 18 Wright State vs Northern Kentucky, Wright State) – yellow
+- Landen Bressler (Sep 13 Kent State vs Akron, Akron) – yellow
+- Dominic Gambaccini (Sep 13 Kent State vs Akron, Akron) – yellow
+- Matthew Hueter (Sep 19 Xavier vs Cleveland State, Cleveland State) – yellow
+- Francisco Villa Alcaraz (Sep 19 Xavier vs Cleveland State, Cleveland State) – yellow
+- Owen Hopper (Sep 19 Xavier vs Cleveland State, Cleveland State) – yellow
+- Kwame Fokuo (Sep 19 North Dakota State vs North Dakota, North Dakota) – yellow
+- Jaeyong Park (Sep 19 North Dakota State vs North Dakota, North Dakota) – red
+- Barakas Kararbo (Sep 19 Wyoming vs Colorado-Denver, Wyoming) – yellow
+- Giovanni Monterastelli (Sep 19 Wyoming vs Colorado-Denver, Wyoming) – yellow
+- Kassim Kassim (Sep 19 South Dakota State vs South Dakota, South Dakota State) – yellow
+- Dalal Almuzaini (Sep 19 Miami vs Tampa, Miami) – yellow
+- Ali Arnaout (Sep 19 Wyoming vs Colorado-Denver, Colorado-Denver) – yellow
+- Gerardo Rosales (Sep 19 Wyoming vs Colorado-Denver, Colorado-Denver) – yellow
+- Ty Luhring (Sep 19 Northern Iowa vs Macalester, Northern Iowa) – yellow
+- brianna price (Sep 19 The College of New Jersey vs Haverford, The College of New Jersey) – yellow
+- Campbell Kilian (Sep 19 North Dakota State vs North Dakota, North Dakota State) – yellow
+- Lukas Moskey (Sep 19 Boston University vs Harvard "A", Harvard "A") – yellow
+- Tomas Hernandez (Sep 19 Albany vs Army West Point, Army West Point) – yellow
+- Cody Rahmann (Sep 19 New Haven vs Central Connecticut State, Central Connecticut State) – yellow
+- Arnold Dominguez (Sep 19 New Haven vs Central Connecticut State, Central Connecticut State) – yellow
+- Din Tahirovic (Sep 19 New Haven vs Central Connecticut State, Central Connecticut State) – yellow
+- Jack Stricker (Sep 19 New Haven vs Central Connecticut State, Central Connecticut State) – yellow
+- angelo santostefano (Sep 19 New Haven vs Central Connecticut State, Central Connecticut State) – yellow
+- Gabriel Lopez (Sep 19 Cal Poly Pomona vs San Diego, Cal Poly Pomona) – yellow
+- Avery Ma Cui (Sep 19 Cal Poly Pomona vs San Diego, Cal Poly Pomona) – yellow
+- Ethan Khan (Sep 19 Kutztown vs Villanova, Villanova) – yellow
+- Lluis Costa Gonzalez (Sep 19 Kutztown vs Villanova, Villanova) – yellow
+- Julio Gregorio Juarez (Sep 19 American vs Georgetown-Blue, American) – yellow
+- Brillant KUBWIMANA KIREZI (Sep 19 South Dakota State vs South Dakota, South Dakota) – yellow
+- Michael Gonzalez (Sep 20 Manhattan vs Farmingdale , Farmingdale ) – yellow
+- Antonio Castillo Fessenko (Sep 19 Fordham vs Stevens, Fordham) – yellow
+- Mihailo Janevski (Sep 18 Michigan vs Grand Valley State, Grand Valley State) – yellow
+- Lucas Rocha (Sep 20 Wright State vs Cincinnati-B, Wright State) – yellow
+- Nathan Lulgjurovic (Sep 20 Manhattan vs Farmingdale , Manhattan) – yellow
+- Isaac Hernandez (Sep 19 Eastern Michigan vs Calvin, Calvin) – yellow
+- Kaden Haslach (Sep 20 Northern Iowa vs Minnesota-Maroon, Northern Iowa) – yellow
+- Buhlebenkosi Mhlongo (Sep 20 Brandeis vs Harvard "A", Harvard "A") – yellow
+- Corey Innis (Sep 20 Connecticut College vs Providence, Providence) – yellow
+- Augusto Baldini (Sep 20 UMass Lowell vs Colby, Colby) – yellow
+- Ethan Anisman (Sep 20 UMass Lowell vs Colby, Colby) – yellow
+- Ryan Szczepkowski (Sep 20 UMass Lowell vs Colby, Colby) – yellow
+- Zach Henderson (Sep 20 Eastern Michigan vs Ferris State, Ferris State) – yellow
+- John Moxham (Sep 20 Johns Hopkins vs Loyola Maryland, Loyola Maryland) – yellow
+- William Burgess (Sep 20 Johns Hopkins vs Loyola Maryland, Loyola Maryland) – yellow
+- Bryce Russ (Sep 19 Tufts University-Blue vs Worcester Polytechnic, Worcester Polytechnic) – yellow
+- Keilan Cox (Sep 19 Tufts University-Blue vs Worcester Polytechnic, Worcester Polytechnic) – yellow
+- Benedict Otim (Sep 20 Bates vs Bowdoin, Bates) – yellow
+- Alex Okpoyo (Sep 19 Tufts University-Blue vs Worcester Polytechnic, Tufts University-Blue) – yellow
+- Alex Bronstein (Sep 20 Babson vs Tufts University-Blue, Tufts University-Blue) – yellow
+- Nick Makar (Sep 20 Saint Joseph's vs Villanova, Saint Joseph's) – yellow
+- Nicholas Santos (Sep 20 Saint Joseph's vs Villanova, Saint Joseph's) – yellow
+- Kai McKernan (Sep 19 Arizona State II vs Arizona, Arizona State II) – yellow
+- Abdulwahab Alaqra (Sep 19 Arizona State II vs Arizona, Arizona State II) – yellow
+- Vincent Robbennolt (Sep 19 Arizona State II vs Arizona, Arizona State II) – yellow
+- Gregory Remy (Sep 19 Arizona State vs Arizona II, Arizona State) – yellow
+- Fabian Caceres (Sep 20 UNC-Chapel Hill vs High Point-White, UNC-Chapel Hill) – yellow
+- Isaac Frey (Sep 19 Kutztown vs Villanova, Kutztown) – yellow
+- Jared Mikloski (Sep 19 Kutztown vs Villanova, Kutztown) – yellow
+- Sleem Emam (Sep 19 Kutztown vs Villanova, Kutztown) – yellow
+- Samuel Kaganzev (Sep 19 Kutztown vs Villanova, Kutztown) – yellow
+- Geoff Paton (Sep 19 Cincinnati vs Ohio, Cincinnati) – yellow
+- RJ Guerrero (Sep 19 Xavier vs Cincinnati-B, Cincinnati-B) – yellow
+- Joey Pallone (Sep 20 Case Western vs Cincinnati, Cincinnati) – yellow
+- Kyler Hickey (Sep 20 Case Western vs Cincinnati, Cincinnati) – yellow
+- Adam Vincek (Sep 20 Case Western vs Cincinnati, Cincinnati) – yellow
+- Jackson Warnke (Sep 20 Augustana vs South Dakota State, South Dakota State) – yellow
+- Carson Runyan (Sep 20 Wright State vs Cincinnati-B, Cincinnati-B) – yellow
+- William Ferris (Sep 19 Illinois-Chicago vs Iowa, Iowa) – yellow
+- Sam Barsch (Sep 19 Illinois-Chicago vs Iowa, Iowa) – yellow
+- Gyslain Ngongo (Sep 19 Illinois-Chicago vs Iowa, Iowa) – yellow
+- Joshua Modiano (Sep 20 Brandeis vs Harvard "A", Brandeis) – yellow
+- Gyslain Ngongo (Sep 20 DePaul vs Iowa, Iowa) – yellow
+- Ihab Mesbah (Sep 19 New Mexico vs New Mexico State, New Mexico State) – yellow
+- James Lewis (Sep 20 Gustavus vs Minnesota-Gold, Minnesota-Gold) – yellow
+- Adrian Tavera (Sep 19 UW-Eau Claire vs Marquette, Marquette) – yellow
+- Christian Kinney (Sep 19 UW-Eau Claire vs Marquette, Marquette) – yellow
+- Flynn Mcleay (Sep 19 UW-Eau Claire vs Marquette, Marquette) – yellow
+- Brennan Bezdek (Sep 20 Worcester Polytechnic vs Northeastern, Northeastern) – yellow
+- Reagan Harbeck (Sep 19 Grand Canyon vs Northern Arizona , Grand Canyon) – yellow
+- Alexandra Wilkie (Sep 19 Grand Canyon vs Northern Arizona , Grand Canyon) – yellow
+- Benjamin Crowell (Sep 20 UW-River Falls vs UW-Superior, UW-River Falls) – yellow
+- Emilio Sanchez Pulido (Sep 19 New Haven vs Central Connecticut State, New Haven) – yellow
+- Marvin Ruiz (Sep 19 East Tennessee vs Kentucky, Kentucky) – yellow
+- Christian Lehman (Sep 19 East Tennessee vs Kentucky, Kentucky) – yellow
+- Cesar Castillo (Sep 19 East Tennessee vs Kentucky, Kentucky) – yellow
+- Marc Scarpelli (Sep 20 Florida Gulf Coast vs Central Florida, Central Florida) – yellow
+- Enzo De Paula (Sep 20 Florida Gulf Coast vs Central Florida, Central Florida) – yellow
+- Bryce Shockley (Sep 12 Arkansas vs Oklahoma, Oklahoma) – yellow
+- Luke Johnson (Sep 20 Texas A&M-B vs Texas-San Antonio, Texas A&M-B) – yellow
+- Robert Hemingway (Sep 20 High Point-Purple vs UNC-Wilmington, High Point-Purple) – yellow
+- Carter Holmes (Sep 20 Oklahoma State vs Abilene Christian, Abilene Christian) – yellow
+- Jaime Noya Soto (Sep 20 Arizona State II vs Arizona State, Arizona State II) – yellow
+- Zack Harder (Sep 20 Arizona State II vs Arizona State, Arizona State II) – yellow
+- Jonah Stashko (Sep 20 NC State vs Coastal Carolina "A", Coastal Carolina "A") – yellow
+- Alexander Mihaylov (Sep 19 UW-Lacrosse vs Milwaukee School of Engineering, Milwaukee School of Engineering) – yellow
+- Jared Bendo (Sep 19 Saginaw Valley State vs Akron, Akron) – yellow
+- Ethan Anisman (Sep 25 Colby vs Bowdoin, Colby) – yellow
+- Carter Friese (Sep 25 Colby vs Bowdoin, Colby) – yellow
+- Rhys Ferer (Sep 25 Colby vs Bowdoin, Colby) – yellow
+- Aidan Simmonds (Sep 25 Colby vs Bowdoin, Colby) – yellow
+- Anthony Blissmer (Sep 25 Indiana-Indianapolis vs Ball State, Ball State) – yellow
+- Charlize Telleria (Sep 26 Delaware vs George Mason, George Mason) – yellow
+- Oscar Martinez Mendoza (Sep 25 Colby vs Bowdoin, Bowdoin) – yellow
+- Matthew Kim (Sep 25 Colby vs Bowdoin, Bowdoin) – yellow
+- Marcos Villarreal (Sep 25 Colby vs Bowdoin, Bowdoin) – yellow
+- Francesco Gjinplaku (Sep 26 Cleveland State vs Akron, Cleveland State) – yellow
+- Daniel Tadic (Sep 26 Cleveland State vs Akron, Cleveland State) – yellow
+- Owen Hopper (Sep 26 Cleveland State vs Akron, Cleveland State) – yellow
+- Francisco Villa Alcaraz (Sep 26 Cleveland State vs Akron, Cleveland State) – yellow
+- morgan warren (Sep 26 Nova Southeastern vs Florida International, Nova Southeastern) – yellow
+- Ivan Chavez (Sep 26 Oklahoma vs Texas Tech, Texas Tech) – yellow
+- Carson Lotz (Sep 26 North Dakota vs South Dakota, North Dakota) – yellow
+- Tristan Patch (Sep 26 Washtenaw  vs Calvin, Calvin) – yellow
+- Bryan Bosley (Sep 26 Washtenaw  vs Calvin, Calvin) – yellow
+- Braden Cope (Sep 26 Oklahoma vs Texas Tech, Oklahoma) – yellow
+- Ivan Castañeda (Sep 26 Oklahoma vs Texas Tech, Oklahoma) – yellow
+- Marko Sucic (Sep 26 Arizona vs Northern Arizona, Northern Arizona) – yellow
+- Silas Meister (Sep 26 Arizona vs Northern Arizona, Northern Arizona) – yellow
+- Antonio Strati (Sep 26 Arizona vs Northern Arizona, Northern Arizona) – yellow
+- Jackson Sauer (Sep 26 Arizona vs Northern Arizona, Northern Arizona) – yellow
+- Bryan Gauto (Sep 26 Michigan Tech vs Milwaukee School of Engineering, Milwaukee School of Engineering) – yellow
+- Ethan Seeliger (Sep 26 Michigan Tech vs Milwaukee School of Engineering, Milwaukee School of Engineering) – yellow
+- Nicholas Foley (Sep 26 Carleton vs Minnesota-Duluth, Carleton) – yellow
+- Brayden Haveman (Sep 26 Hope vs Eastern Michigan, Hope) – yellow
+- Luis A Tobar (Sep 26 Nova Southeastern vs Florida International, Florida International) – yellow
+- Pablo Zurbano (Sep 26 Nova Southeastern vs Florida International, Florida International) – yellow
+- Javi Mosquera (Sep 26 Tulsa vs North Texas, Tulsa) – yellow
+- Rocco Racioppi (Sep 27 Miami vs Florida International, Florida International) – yellow
+- Roberto Ayala (Sep 27 Miami vs Florida International, Florida International) – yellow
+- William Burgess (Sep 26 Delaware vs Loyola Maryland, Loyola Maryland) – yellow
+- John Moxham (Sep 26 Delaware vs Loyola Maryland, Loyola Maryland) – yellow
+- Justin Blumenthal (Sep 26 Salisbury vs Johns Hopkins, Johns Hopkins) – yellow
+- Justin Blumenthal (Sep 27 Navy vs Johns Hopkins, Johns Hopkins) – yellow
+- Ella Taclas (Sep 27 Arizona  vs Grand Canyon, Arizona ) – yellow
+- Jenna Caputo (Sep 27 Arizona  vs Grand Canyon, Arizona ) – yellow
+- Michael Zapata (Sep 27 Georgia Tech vs Georgia, Georgia Tech) – yellow
+- Jack Ramanata (Sep 27 Georgia Tech vs Georgia, Georgia Tech) – yellow
+- Ethan Hendricks (Sep 27 New Mexico State vs Arizona State, New Mexico State) – yellow
+- Joseph Benninger (Sep 27 New Mexico State vs Arizona State, New Mexico State) – yellow
+- Matthew Mokos (Sep 27 Augustana vs North Dakota, North Dakota) – yellow
+- Evan Harper (Sep 27 UNC-Chapel Hill vs NC State, UNC-Chapel Hill) – yellow
+- Tyler Britt (Sep 27 UNC-Chapel Hill vs NC State, UNC-Chapel Hill) – yellow
+- Ro Hightower (Sep 27 Georgia Southern vs Georgia State, Georgia Southern) – yellow
+- Miles Strong (Sep 27 Georgia Southern vs Georgia State, Georgia Southern) – yellow
+- Chinedu Okafor (Sep 27 Wichita State vs Pittsburg State, Wichita State) – yellow
+- Jack Carlos (Sep 27 Brown vs UConn Blue, UConn Blue) – yellow
+- Dom Booth (Sep 27 UMBC vs Salisbury, UMBC) – yellow
+- fanuel Asmerom (Sep 27 UMBC vs Salisbury, UMBC) – yellow
+- Gabriel Perea (Sep 27 UMBC vs Salisbury, UMBC) – yellow
+- Chiderah Nwaogbo (Sep 27 UMBC vs Salisbury, UMBC) – yellow
+- Hamed Diallo (Sep 27 UMBC vs Salisbury, UMBC) – yellow
+- Christian Ojeda (Sep 27 Central Oklahoma vs Texas Tech-B, Central Oklahoma) – yellow
+- Drew Latourelle (Sep 27 South Carolina vs UNC-Wilmington, South Carolina) – yellow
+- Hunter Hawkins (Sep 27 South Carolina vs UNC-Wilmington, South Carolina) – yellow
+- William Humphries (Sep 27 South Carolina vs UNC-Wilmington, South Carolina) – yellow
+- Savannah Maley (Sep 26 Arizona State-Gold vs Arizona Christian, Arizona State-Gold) – yellow
+- Jan Wergusch (Sep 27 John Carroll vs Northern Kentucky, Northern Kentucky) – yellow
+- Lleyton Gardner (Sep 27 East Tennessee vs Western Kentucky, Western Kentucky) – yellow
+- Aspen Park (Sep 27 SUNY New Paltz vs Army West Point, Army West Point) – yellow
+- Christian Rada (Sep 27 SUNY New Paltz vs Army West Point, Army West Point) – yellow
+- Alex Perez (Sep 26 Minot State vs South Dakota State, Minot State) – yellow
+- Jack White (Sep 26 Trinity vs Louisiana Tech, Trinity) – yellow
+- Jaden Hermann (Sep 26 Trinity vs Louisiana Tech, Trinity) – yellow
+- Moustapha Ndao (Sep 27 Iowa vs Illinois State, Iowa) – yellow
+- James Pacetti (Sep 26 Marquette vs UW-Madison, Marquette) – yellow
+- Tucker Bowley (Sep 27 Grand Canyon vs Arizona State II, Arizona State II) – yellow
+- Mason Snailum (Sep 27 New Mexico State vs Arizona State, Arizona State) – yellow
+- Michael Franco (Sep 27 New Mexico State vs Arizona State, Arizona State) – yellow
+- David Giraldo (Sep 25 Farmingdale  vs Hofstra, Farmingdale ) – yellow
+- Miles Redmond (Sep 29 Minnesota-Maroon vs Minnesota-Gold, Minnesota-Gold) – yellow
+- Evan Galledou (Sep 29 Minnesota-Maroon vs Minnesota-Gold, Minnesota-Gold) – yellow
+- Jackson Davis (Sep 26 Cleveland State vs Akron, Akron) – yellow
+- Landon Mendoza (Oct 3 Temple vs The College of New Jersey, Temple) – yellow
+- Wyatt Snow (Oct 3 Wyoming vs Metro State, Wyoming) – yellow
+- Zander Cleland (Oct 3 Wyoming vs Metro State, Wyoming) – yellow
+- Reyna Doherty (Oct 3 Princeton vs Temple, Temple) – yellow
+- Soren Hansen (Sep 20 Gustavus vs Minnesota-Gold, Gustavus) – yellow
+- Youssef Khadrani (Oct 3 Central Connecticut State vs Brown, Central Connecticut State) – yellow
+- naiyar fraser (Oct 3 Central Connecticut State vs Brown, Central Connecticut State) – yellow
+- Jacob Diehl (Oct 3 Abilene Christian vs Central Oklahoma, Abilene Christian) – yellow
+- Antonio Strati (Oct 3 Northern Arizona vs Arizona II, Northern Arizona) – yellow
+- Jackson Sauer (Oct 3 Northern Arizona vs Arizona II, Northern Arizona) – yellow
+- Aidan Daniels (Oct 2 Worcester Polytechnic vs Clark, Worcester Polytechnic) – yellow
+- David Hernandez (Oct 3 New Mexico State vs New Mexico II, New Mexico State) – yellow
+- Ronan Oemig (Oct 3 New Mexico State vs New Mexico II, New Mexico State) – yellow
+- Nolan Flipse (Oct 3 Ferris State vs Calvin, Calvin) – yellow
+- Grant Morren (Oct 3 Ferris State vs Calvin, Calvin) – yellow
+- Nicholas Doletzky (Oct 2 Grand Valley State vs Maize FC, Grand Valley State) – yellow
+- Jayden Grant (Oct 3 John Carroll vs Wright State, Wright State) – yellow
+- Jackson Dubs (Oct 3 Colorado Christian vs Regis, Colorado Christian) – yellow
+- Omar Romagnolli (Oct 3 Oklahoma vs Texas-Dallas, Oklahoma) – yellow
+- Matthew Marquez de la Plata (Oct 3 Oklahoma vs Texas-Dallas, Oklahoma) – yellow
+- Giovani Beltran (Oct 3 Colorado-Denver vs Colorado State-Green, Colorado-Denver) – red
+- Diego Hernandez (Oct 3 Colorado Christian vs Regis, Regis) – yellow
+- Raj Poudyal (Oct 3 Colorado Christian vs Regis, Regis) – yellow
+- Leo Journoud (Oct 4 Elon vs UNC-Charlotte, Elon) – yellow
+- abigail diaz (Oct 4 Maine vs Colby, Colby) – yellow
+- Owen Christianson (Oct 3 Purdue vs Michigan State, Michigan State) – yellow
+- Cooper Cardenas (Oct 4 Wake Forest vs NC State, NC State) – yellow
+- Noah Radecki (Oct 4 Maine vs Colby, Colby) – yellow
+- Noa Sherwood (Oct 4 Duke vs UNC-Chapel Hill, UNC-Chapel Hill) – yellow
+- Gianna Simmonds (Oct 4 Princeton vs West Chester, West Chester) – yellow
+- Reece Murray (Oct 4 Mankato vs Northern Iowa, Northern Iowa) – yellow
+- Josh Albright (Oct 4 Tarleton State vs Central Oklahoma, Central Oklahoma) – yellow
+- Christian Ojeda (Oct 4 Tarleton State vs Central Oklahoma, Central Oklahoma) – yellow
+- Marco Serrano (Oct 4 Tarleton State vs Central Oklahoma, Central Oklahoma) – yellow
+- Omar Abulail (Oct 4 Boston College vs Worcester Polytechnic, Worcester Polytechnic) – yellow
+- Dylan Helde (Oct 4 Air Force vs UC Colorado Springs, UC Colorado Springs) – yellow
+- Jad Najyb (Oct 4 Manhattan vs Stony Brook, Stony Brook) – yellow
+- Jaden Bascom (Oct 4 Manhattan vs Stony Brook, Stony Brook) – yellow
+- Jack Smith (Oct 3 UMass Lowell vs Southern New Hampshire, Southern New Hampshire) – yellow
+- Anthony Badulescu (Oct 3 UMass Lowell vs Southern New Hampshire, Southern New Hampshire) – yellow
+- Dylan Liquard (Oct 4 Army West Point vs Rensselaer Polytechnic, Army West Point) – yellow
+- Evan Costes (Oct 4 Manhattan vs Stony Brook, Manhattan) – yellow
+- Malcolm Naughton (Oct 4 Manhattan vs Stony Brook, Manhattan) – yellow
+- Jacob Jesko (Oct 4 Cleveland State vs Ohio State, Cleveland State) – yellow
+- Adriano Zagar (Oct 4 Cleveland State vs Ohio State, Cleveland State) – yellow
+- Matthew Hueter (Oct 4 Cleveland State vs Ohio State, Cleveland State) – yellow
+- Tyler Marquez (Oct 4 UW-Madison vs Milwaukee School of Engineering, Milwaukee School of Engineering) – yellow
+- Noelle Hanson (Oct 4 Navy vs Maryland-Black, Navy) – yellow
+- Joseph Ochieng (Oct 4 Army West Point vs Rensselaer Polytechnic, Rensselaer Polytechnic) – yellow
+- alaina  ubaldini (Oct 4 Northern Arizona  vs Arizona State-Gold, Arizona State-Gold) – yellow
+- Freddie Marcell (Oct 3 Akron vs Miami (OH), Miami (OH)) – yellow
+- Ashton Daher (Oct 3 Akron vs Miami (OH), Miami (OH)) – yellow
+- William Mena Adame (Oct 4 Arizona State vs Grand Canyon, Arizona State) – yellow
+- Ava Breuer (Oct 3 Arkansas vs Missouri State, Missouri State) – yellow
+- Ryder Kohl (Oct 4 Middle Tennessee vs Kentucky, Kentucky) – yellow
+- Mia Bruno (Oct 2 Colby vs Bates, Bates) – yellow
+- Juan Casal (Oct 4 Arizona State III vs Texas-El Paso, Arizona State III) – yellow
+- Noah Thomas (Oct 4 Louisiana Tech vs Texas A&M, Texas A&M) – yellow
+- Benjamin Crowell (Oct 3 UW-River Falls vs Carleton, UW-River Falls) – yellow
+- Caleb Cave (Oct 10 Abilene Christian vs Texas Tech-B, Abilene Christian) – yellow
+- Grant Hunsicker (Oct 10 Butler vs Cleveland State, Cleveland State) – yellow
+- Gavin Wells (Oct 9 NC State vs East Carolina, East Carolina) – yellow
+- Patrick dion (Oct 9 NC State vs East Carolina, East Carolina) – yellow
+- Lucas Boebel (Oct 10 Iowa vs Loyola-Chicago, Iowa) – yellow
+- Mattias Stadler (Oct 11 Bowling Green State vs Notre Dame, Bowling Green State) – yellow
+- Taiden Ampofo (Oct 11 Manhattan vs Columbia, Manhattan) – yellow
+- Lukas Heon (Oct 18 Rhode Island vs Bryant, Bryant) – yellow
+- Grady Jondro (Oct 17 Minot State vs North Dakota, North Dakota) – yellow
+- Kwame Fokuo (Oct 17 Minot State vs North Dakota, North Dakota) – yellow
+- Austin Krajcer (Oct 18 Louisiana State vs Texas State, Louisiana State) – yellow
+- John O’Neal (Oct 18 Clemson vs Georgia Tech, Georgia Tech) – yellow
+- Aspen Park (Oct 18 Army West Point vs Williams, Army West Point) – yellow
+- Xavier Styles (Oct 18 UW-Milwaukee vs Milwaukee School of Engineering, Milwaukee School of Engineering) – yellow
+- Kyler Hickey (Oct 16 Miami (OH) vs Cincinnati, Cincinnati) – yellow
+- Connor Ammon (Sep 27 Grand Valley State vs Cincinnati, Cincinnati) – yellow
+- Brandon Liddell (Oct 18 Stevenson vs Towson, Stevenson) – yellow
+- Victor Vargas (Oct 18 Arizona State-Gold vs Grand Canyon II, Arizona State-Gold) – yellow
+- Miles Ognall (Oct 25 SUNY New Paltz vs Skidmore, Skidmore) – yellow
+- Miller Thoss (Oct 25 SUNY New Paltz vs Skidmore, Skidmore) – yellow
+- Jacob Lowrey (Oct 25 Regis vs Wyoming, Regis) – yellow
+- Jack Donohoe (Oct 23 Siena vs Rensselaer Polytechnic, Rensselaer Polytechnic) – yellow
+- Austin Negri (Oct 25 Michigan State vs Saginaw Valley State, Michigan State) – yellow
+- Christian Vargas (Oct 25 Hofstra vs Manhattan, Hofstra) – yellow
+- Joao Reis (Oct 29 Florida Atlantic vs Florida International, Florida International) – yellow
+- Luis Alfonso Perez De La Cruz (Oct 29 Florida Atlantic vs Florida International, Florida International) – yellow
+- Isaias Bonilla (Oct 29 School of Mines vs Colorado-White, Colorado-White) – yellow
+- Asher Gearity (Oct 30 Ohio State vs Miami (OH), Ohio State) – yellow
+- Declan Kelly (Nov 6 Arizona Christian vs Northern Arizona, Arizona Christian) – yellow
+- Alan Victoria (Nov 7 Arizona II vs Arizona State II, Arizona State II) – yellow
+- Toua Vang (Nov 14 Carleton vs UW-River Falls, UW-River Falls) – yellow
+- Nicholas Kwong (Nov 14 Arizona State III vs New Mexico State, Arizona State III) – yellow
+
+## Reported goals higher than the team's score (check for duplicates or a wrong game) (10)
+
+- Sep 19 Salve Regina vs Stonehill, Salve Regina: 1.0 goals reported, score shows 0 (1 submission(s))
+- Sep 19 Kutztown vs Villanova, Villanova: 4.0 goals reported, score shows 3 (1 submission(s))
+- Sep 20 New Mexico vs New Mexico Tech, New Mexico: 10.0 goals reported, score shows 9 (1 submission(s))
+- Sep 19 Michigan State vs Michigan-Flint, Michigan State: 13.0 goals reported, score shows 12 (1 submission(s))
+- Sep 20 Colorado State vs Colorado-Silver, Colorado-Silver: 4.0 goals reported, score shows 2 (2 submission(s))
+- Oct 10 Columbia vs Farmingdale , Columbia: 12.0 goals reported, score shows 11 (1 submission(s))
+- Oct 11 Northeastern vs Harvard "B", Northeastern: 12.0 goals reported, score shows 11 (1 submission(s))
+- Oct 25 Case Western vs Cleveland State, Cleveland State: 1.0 goals reported, score shows 0 (1 submission(s))
+- Oct 25 Hofstra vs Manhattan, Hofstra: 4.0 goals reported, score shows 3 (1 submission(s))
+- Oct 24 Rensselaer Polytechnic vs Williams, Rensselaer Polytechnic: 1.0 goals reported, score shows 0 (1 submission(s))

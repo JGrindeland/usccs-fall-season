@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Build the USCCS regular-season page (schedules, results, standings, stats) from data/*.json
 (written by scripts/pull.py from SportsEngine's public season microsite feed). Output: site/index.html"""
-import json, base64, pathlib, datetime
+import json, base64, pathlib, datetime, sys, collections
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import stats as statmerge
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 HERE = ROOT / "data"
@@ -14,6 +16,9 @@ norm = lambda n: re.sub(r"[^a-z0-9]", "", n.lower())
 LOGO_OVERRIDE = {"csusanmarcos": "data:image/webp;base64," + b64(ASSETS / "csusm_logo.webp")}   # supplied by Jordan, Nov 23
 DROP_STANDINGS = {"tbd"}   # placeholder rows removed from standings (e.g. Men Midwest South)
 PL = json.load(open(HERE / "players.json"))   # re-pulled one team at a time (stable paging)
+_read = lambda n: (HERE / n).read_text(encoding="utf-8") if (HERE / n).exists() else ""
+BOX, TOT, REVIEW = statmerge.merge(raw["seasons"], _read("sheet_stats.csv"), _read("cards.csv"))   # USCCS stat sheet + misconduct CSV
+(HERE / "review.md").write_text(statmerge.review_markdown(REVIEW))
 
 
 # ---------- compact the data ----------
@@ -27,10 +32,12 @@ for s in raw["seasons"]:
     teams = [[s["teams"][t][0], dix.get(divname.get(s["teams"][t][1], ""), -1), LOGO_OVERRIDE.get(norm(s["teams"][t][0]), LOGOS.get(s["teams"][t][2], ""))] for t in tids]
     tzs = sorted({g[1] for g in s["games"]})
     games = []
-    for g in s["games"]:
+    for gi, g in enumerate(s["games"]):
         if g[3] not in tix or g[4] not in tix: continue
+        b = BOX.get(s["key"], {}).get(gi)
         games.append([g[0][:16], tzs.index(g[1]), g[2], tix[g[3]], tix[g[4]],
-                      g[5] if g[5] != "" else None, g[6] if g[6] != "" else None, g[7], g[9]])
+                      g[5] if g[5] != "" else None, g[6] if g[6] != "" else None, g[7], g[9],
+                      [b.get("h", []), b.get("a", [])] if b else 0])      # box: rows [name, G, A, YC, RC, CS]
     name2team = {}
     for i, t in enumerate(teams): name2team.setdefault(norm(t[0]), i)
     for nm in {p[1] for p in PL[s["key"]]} | {r[0] for n in s["standings"] for r in n["rows"]}:   # truncated names, e.g. "Milwaukee School of Engin"
@@ -43,7 +50,24 @@ for s in raw["seasons"]:
         d = divname.get(n["div"], "")
         rows = [[name2team.get(norm(r[0]), -1), r[0]] + [r[k] or 0 for k in (1, 2, 3, 4, 7, 5, 6, 8, 9, 10)] for r in n["rows"] if norm(r[0]) not in DROP_STANDINGS]
         stand.append([dix.get(d, -1), rows])     # rows: team, name, P W L D GD GF GA Pts YC RC
-    players = [[p[0], name2team.get(norm(p[1]), -1), p[2], p[3], p[4], p[5], p[6]] for p in PL[s["key"]] if norm(p[1]) in name2team]
+    # season player totals: per player, each stat = the higher of SportsEngine's total and the stat-sheet total (never added)
+    merged = collections.defaultdict(list)
+    for (tk, pk), t in TOT.get(s["key"], {}).items():
+        merged[name2team.get(tk, name2team.get(norm(t[1]), -1))].append(t)
+    players, used = [], set()
+    for p in PL[s["key"]]:
+        if norm(p[1]) not in name2team: continue
+        ti = name2team[norm(p[1])]
+        m = next((t for t in merged.get(ti, []) if id(t) not in used and statmerge.same_person(t[0], p[0])), None)
+        if m: used.add(id(m))
+        mt = m or [p[0], "", 0, 0, 0, 0, 0.0, 0]
+        players.append([p[0], ti, max(p[2], mt[7]), max(p[3], mt[2]), max(p[4], mt[3]), max(p[5], mt[4]), max(p[6], mt[5]), round(mt[6], 2)])
+    for ti, lst in merged.items():
+        if ti < 0: continue
+        for t in lst:
+            if id(t) not in used:
+                players.append([t[0], ti, t[7], t[2], t[3], t[4], t[5], round(t[6], 2)])
+    players = [p for p in players if any(p[3:])]
     out["seasons"].append({"key": s["key"], "label": "Men" if s["key"] == "men" else "Women", "name": s["name"],
                            "divs": divs, "teams": teams, "tz": tzs, "games": games, "stand": stand, "players": players})
 
@@ -140,6 +164,19 @@ tr.me td{background:var(--win)}
 .sum div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
 .sum b{display:block;font-family:IndBlack,Arial,sans-serif;font-size:22px}
 .sum span{font-family:IndDemi,Arial,sans-serif;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.bxbtn{all:unset;cursor:pointer;font-family:IndDemi,Arial,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.bxbtn:hover,.bxbtn:focus-visible{text-decoration:underline}
+.box{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;border-top:1px solid var(--line2);padding-top:10px;margin-top:2px}
+.box h4{margin:0 0 4px;font-family:IndDemi,Arial,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.box ul{list-style:none;margin:0;padding:0;display:grid;gap:3px;font-size:13px}
+.box li{display:flex;gap:6px;align-items:center;min-width:0;overflow-wrap:anywhere}
+.box .n{font-family:IndDemi,Arial,sans-serif}
+.box .x{color:var(--muted);font-family:IndBook,Arial,sans-serif}
+.ic{flex:none;display:inline-block;width:14px;text-align:center;font-family:IndBlack,Arial,sans-serif;font-size:11px;color:var(--muted)}
+.cd{flex:none;display:inline-block;width:9px;height:12px;border-radius:2px;margin:0 2.5px}
+.cd.y{background:#F2C200}.cd.r{background:#D92D20}
+.box .none{color:var(--muted);font-family:IndBook,Arial,sans-serif;font-size:12px}
+@media (max-width:640px){.box{grid-template-columns:1fr}}
 footer{font-family:IndBook,Arial,sans-serif;color:var(--muted);font-size:12px;padding-block:8px 20px}
 @media (max-width:640px){
   header .crest{height:64px}
@@ -183,10 +220,10 @@ footer{font-family:IndBook,Arial,sans-serif;color:var(--muted);font-size:12px;pa
   </div>
   <div id="view"></div>
 </main>
-<footer class="wrap">Standings, results and player stats as entered in SportsEngine. Goal difference follows SportsEngine's standings settings. Player stats include only players with a goal, assist or card recorded.</footer>
+<footer class="wrap">Schedules, results and standings from SportsEngine; goal difference follows SportsEngine's standings settings. Goals, assists and clean sheets also come from USCCS team stat reports, and cards from the misconduct record. Each player's season numbers use the higher of SportsEngine and those reports, so nothing is counted twice.</footer>
 <script>
 const DATA = __DATA__;
-const S = {g:0, tab:"stand", div:"", team:"", q:"", order:"asc", limit:120};
+const S = {g:0, tab:"stand", div:"", team:"", q:"", order:"asc", limit:120, open:new Set()};
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const sea = () => DATA.seasons[S.g];
@@ -235,12 +272,23 @@ function gameList(){
   gs.sort((a,b)=> S.order==="asc" ? a.g[0].localeCompare(b.g[0]) : b.g[0].localeCompare(a.g[0]));
   return gs;
 }
+function boxSide(rows, team){
+  const R = rows||[], list = (f) => R.filter(f);
+  const nm = r => `<span class="n">${esc(r[0])}</span>`;
+  const goals = list(r=>r[1]>0).map(r=>`<li><span class="ic">G</span>${nm(r)}${r[1]>1?` <span class="x">×${r[1]}</span>`:""}</li>`);
+  const ast = list(r=>r[2]>0).map(r=>`<li><span class="ic">A</span>${nm(r)}${r[2]>1?` <span class="x">×${r[2]}</span>`:""}</li>`);
+  const cards = list(r=>r[3]>0||r[4]>0).map(r=>`<li>${'<span class="cd y" title="Yellow card"></span>'.repeat(r[3])}${'<span class="cd r" title="Red card"></span>'.repeat(r[4])}${nm(r)}</li>`);
+  const cs = list(r=>r[5]>0).map(r=>`<li><span class="ic">CS</span>${nm(r)}${r[5]<1?` <span class="x">(shared ${r[5]})</span>`:""}</li>`);
+  const all = [...goals,...ast,...cards,...cs];
+  return `<div><h4>${esc(team)}</h4>${all.length?`<ul>${all.join("")}</ul>`:`<span class="none">No stats reported</span>`}</div>`;
+}
+function boxHTML(g){ const s = sea(); return `<div class="box">${boxSide(g[9][0], s.teams[g[3]][0])}${boxSide(g[9][1], s.teams[g[4]][0])}</div>`; }
 function schedule(){
   const s = sea(); const gs = gameList();
   if (!gs.length) return `<div class="empty">No games match these filters.</div>`;
   const played = gs.filter(x=>x.g[5]!=null&&x.g[6]!=null).length;
   let html = `<p class="note">${gs.length} games · ${played} with scores. Times are local to the venue.</p>`; let last = "";
-  for (const {g} of gs.slice(0, S.limit)){
+  for (const {g,i} of gs.slice(0, S.limit)){
     const tz = s.tz[g[1]], d = new Date(g[0]+":00Z");
     const day = fmt(tz,{weekday:"long",month:"long",day:"numeric"}).format(d);
     if (day!==last){ html += (last?`</div>`:"") + `<div class="day">${esc(day)}</div><div class="games">`; last = day; }
@@ -254,7 +302,8 @@ function schedule(){
       <div class="h ${has&&hs>as?"win":has&&hs<as?"lose":""}" style="display:flex">${tm(g[3])}</div>
       <div class="sc ${has?"":"vs"}">${has?`${hs} – ${as}`:"vs"}</div>
       <div class="a ${has&&as>hs?"win":has&&as<hs?"lose":""}" style="display:flex">${tm(g[4])}</div>
-      <div class="meta">${dv?`<span class="tag">${esc(dv)}</span>`:""}${cls?`<span class="tag ${cls}">${esc(tag)}</span>`:""}${g[7]?`<span>${esc(g[7])}</span>`:""}</div></div>`;
+      <div class="meta">${dv?`<span class="tag">${esc(dv)}</span>`:""}${cls?`<span class="tag ${cls}">${esc(tag)}</span>`:""}${g[7]?`<span>${esc(g[7])}</span>`:""}${g[9]?`<button class="bxbtn" data-box="${i}" aria-expanded="${S.open.has(i)}">${S.open.has(i)?"Hide":"Box score"}</button>`:""}</div>
+      ${g[9]&&S.open.has(i)?boxHTML(g):""}</div>`;
   }
   html += `</div>`;
   if (gs.length > S.limit) html += `<button class="more" id="more">Show more games (${gs.length - S.limit} left)</button>`;
@@ -267,20 +316,25 @@ function stats(){
   // team numbers from standings
   let T = []; for (const [d,rows] of s.stand) for (const r of rows) if (r[0]>=0 && (S.div===""||d==+S.div) && (S.team===""||r[0]==+S.team) && (!S.q||matchQ(r[1]))) T.push(r);
   const cs = {}; for (const g of s.games) if (g[5]!=null&&g[6]!=null&&g[2]==="completed"){ if(+g[6]===0) cs[g[3]]=(cs[g[3]]||0)+1; if(+g[5]===0) cs[g[4]]=(cs[g[4]]||0)+1; }
-  const goals = P.reduce((a,p)=>a+p[3],0), gp = T.reduce((a,r)=>a+r[2],0)/2, gf = T.reduce((a,r)=>a+r[7],0);
+  const goals = P.reduce((a,p)=>a+p[3],0), gf = T.reduce((a,r)=>a+r[7],0), yc = P.reduce((a,p)=>a+p[5],0), rc = P.reduce((a,p)=>a+p[6],0);
+  const TD = {}; for (const p of P){ const t = TD[p[1]] ||= [p[1],0,0]; t[1]+=p[5]; t[2]+=p[6]; }
+  const tp = {}; for (const r of T) tp[r[0]] = r[2];
+  const fmtCS = v => Number.isInteger(v) ? v : v.toFixed(2).replace(/0+$/,"");
   const lead = (title, rows, cols) => `<section class="card"><h3>${title}</h3><div class="tw"><table><thead><tr><th></th>${cols.map(c=>`<th class="${c[2]||""}">${c[0]}</th>`).join("")}</tr></thead><tbody>
      ${rows.length?rows.map((r,i)=>`<tr><td class="rk">${i+1}</td>${cols.map(c=>`<td class="${c[2]||""}">${c[1](r)}</td>`).join("")}</tr>`).join(""):`<tr><td colspan="${cols.length+1}" class="empty">Nothing recorded yet.</td></tr>`}</tbody></table></div></section>`;
   const top = (arr,key,n=15) => arr.filter(r=>key(r)>0).sort((a,b)=>key(b)-key(a)||a[0].localeCompare?.(b[0])).slice(0,n);
   const pl = r => `<span style="font-family:IndDemi,Arial,sans-serif">${esc(r[0])}</span>`;
   const pt = r => tm(r[1]);
   const per = (a,b) => b ? (a/b).toFixed(2) : "–";
-  return `<div class="sum"><div><b>${P.filter(p=>p[3]>0).length}</b><span>Players with a goal</span></div><div><b>${goals}</b><span>Player goals recorded</span></div><div><b>${gf}</b><span>Team goals (standings)</span></div><div><b>${T.length}</b><span>Teams</span></div></div>
+  return `<div class="sum"><div><b>${P.filter(p=>p[3]>0).length}</b><span>Players with a goal</span></div><div><b>${goals}</b><span>Player goals recorded</span></div><div><b>${gf}</b><span>Team goals (standings)</span></div><div><b>${yc}</b><span>Yellow cards</span></div><div><b>${rc}</b><span>Red cards</span></div></div>
   <div class="grid">
    ${lead("Top scorers", top(P,r=>r[3]), [["Player",pl,"l"],["Team",pt,"l hide-sm"],["GP",r=>r[2]],["G",r=>`<b>${r[3]}</b>`],["A",r=>r[4]]])}
    ${lead("Top assists", top(P,r=>r[4]), [["Player",pl,"l"],["Team",pt,"l hide-sm"],["GP",r=>r[2]],["A",r=>`<b>${r[4]}</b>`],["G",r=>r[3]]])}
    ${lead("Best attack", T.filter(r=>r[2]).sort((a,b)=>b[7]/b[2]-a[7]/a[2]||b[7]-a[7]).slice(0,15), [["Team",r=>tm(r[0],r[1]),"l"],["P",r=>r[2]],["GF",r=>r[7]],["Per game",r=>`<b>${per(r[7],r[2])}</b>`]])}
    ${lead("Best defense", T.filter(r=>r[2]).sort((a,b)=>a[8]/a[2]-b[8]/b[2]||(cs[b[0]]||0)-(cs[a[0]]||0)).slice(0,15), [["Team",r=>tm(r[0],r[1]),"l"],["P",r=>r[2]],["GA",r=>r[8]],["Per game",r=>`<b>${per(r[8],r[2])}</b>`],["Clean sheets",r=>cs[r[0]]||0]])}
+   ${lead("Clean sheets (goalkeepers)", top(P,r=>r[7]), [["Player",pl,"l"],["Team",pt,"l hide-sm"],["GP",r=>r[2]],["CS",r=>`<b>${fmtCS(r[7])}</b>`]])}
    ${lead("Discipline", top(P,r=>r[5]+r[6]*3,15), [["Player",pl,"l"],["Team",pt,"l hide-sm"],["Yellow",r=>r[5]],["Red",r=>r[6]]])}
+   ${lead("Team discipline", Object.values(TD).filter(t=>t[1]+t[2]>0).sort((a,b)=>(b[1]+3*b[2])-(a[1]+3*a[2])).slice(0,15), [["Team",r=>tm(r[0]),"l"],["Yellow",r=>r[1]],["Red",r=>r[2]],["Cards per game",r=>`<b>${per(r[1]+r[2],tp[r[0]]||0)}</b>`]])}
   </div>`;
 }
 
@@ -290,6 +344,7 @@ function render(){
   const m = $("#more"); if (m) m.onclick = () => { S.limit += 200; render(); };
 }
 document.addEventListener("click", e => {
+  const bx = e.target.closest("[data-box]"); if (bx){ const i=+bx.dataset.box; S.open.has(i)?S.open.delete(i):S.open.add(i); const y=window.scrollY; render(); window.scrollTo(0,y); return; }
   const b = e.target.closest("[data-team]"); if (b && +b.dataset.team>=0){ S.team = b.dataset.team; const d = teamDiv(+S.team); S.div = d>=0?String(d):""; S.q=""; $("#fQ").value=""; fillFilters(); S.limit=120; render(); window.scrollTo({top:0,behavior:"smooth"}); }
 });
 document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{ S.g=+b.dataset.g; S.div=""; S.team=""; S.limit=120;
