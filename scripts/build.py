@@ -68,8 +68,23 @@ for s in raw["seasons"]:
             if id(t) not in used:
                 players.append([t[0], ti, t[7], t[2], t[3], t[4], t[5], round(t[6], 2)])
     players = [p for p in players if any(p[3:])]
+    # team cards (players + staff, every game with a card record incl. "in progress") and games played incl. "in progress"
+    tcards = {}
+    inprog = collections.Counter()
+    for gi, g in enumerate(s["games"]):
+        if g[3] not in tix or g[4] not in tix: continue
+        b = BOX.get(s["key"], {}).get(gi, {})
+        for side, tid in (("h", g[3]), ("a", g[4])):
+            t = tcards.setdefault(tix[tid], [0, 0, 0])
+            if g[2] in ("completed", "in_progress") and g[5] != "" and g[6] != "": t[2] += 1
+            if g[2] == "in_progress": inprog[tix[tid]] += 1
+            for r in b.get(side, []): t[0] += r[3]; t[1] += r[4]
+    stP = {r[0]: r[2] for _, rows in stand for r in rows if r[0] >= 0}
+    for t, v in tcards.items():
+        if t in stP: v[2] = stP[t] + inprog[t]      # SportsEngine's games played + the "in progress" games it leaves out
     out["seasons"].append({"key": s["key"], "label": "Men" if s["key"] == "men" else "Women", "name": s["name"],
-                           "divs": divs, "teams": teams, "tz": tzs, "games": games, "stand": stand, "players": players})
+                           "divs": divs, "teams": teams, "tz": tzs, "games": games, "stand": stand, "players": players,
+                           "tcards": {str(k): v for k, v in tcards.items() if v[0] or v[1] or v[2]}})
 
 DATA = json.dumps(out, separators=(",", ":"))
 pulled = datetime.datetime.fromisoformat(raw["pulled"].replace("Z", "+00:00")).astimezone(__import__("zoneinfo").ZoneInfo("America/Chicago"))
@@ -316,9 +331,9 @@ function stats(){
   // team numbers from standings
   let T = []; for (const [d,rows] of s.stand) for (const r of rows) if (r[0]>=0 && (S.div===""||d==+S.div) && (S.team===""||r[0]==+S.team) && (!S.q||matchQ(r[1]))) T.push(r);
   const cs = {}; for (const g of s.games) if (g[5]!=null&&g[6]!=null&&g[2]==="completed"){ if(+g[6]===0) cs[g[3]]=(cs[g[3]]||0)+1; if(+g[5]===0) cs[g[4]]=(cs[g[4]]||0)+1; }
-  const goals = P.reduce((a,p)=>a+p[3],0), gf = T.reduce((a,r)=>a+r[7],0), yc = P.reduce((a,p)=>a+p[5],0), rc = P.reduce((a,p)=>a+p[6],0);
-  const TD = {}; for (const p of P){ const t = TD[p[1]] ||= [p[1],0,0]; t[1]+=p[5]; t[2]+=p[6]; }
-  const tp = {}; for (const r of T) tp[r[0]] = r[2];
+  // team cards include staff and every game with a card record (also "in progress" games); games played counts those too
+  const TD = {}; for (const [k,v] of Object.entries(s.tcards)){ const t=+k; if ((S.div===""||teamDiv(t)==+S.div)&&(S.team===""||t==+S.team)&&(!S.q||matchQ(s.teams[t][0]))) TD[t]=[t,v[0],v[1],v[2]]; }
+  const goals = P.reduce((a,p)=>a+p[3],0), gf = T.reduce((a,r)=>a+r[7],0), yc = Object.values(TD).reduce((a,t)=>a+t[1],0), rc = Object.values(TD).reduce((a,t)=>a+t[2],0);
   const fmtCS = v => Number.isInteger(v) ? v : v.toFixed(2).replace(/0+$/,"");
   const lead = (title, rows, cols) => `<section class="card"><h3>${title}</h3><div class="tw"><table><thead><tr><th></th>${cols.map(c=>`<th class="${c[2]||""}">${c[0]}</th>`).join("")}</tr></thead><tbody>
      ${rows.length?rows.map((r,i)=>`<tr><td class="rk">${i+1}</td>${cols.map(c=>`<td class="${c[2]||""}">${c[1](r)}</td>`).join("")}</tr>`).join(""):`<tr><td colspan="${cols.length+1}" class="empty">Nothing recorded yet.</td></tr>`}</tbody></table></div></section>`;
@@ -334,7 +349,7 @@ function stats(){
    ${lead("Best defense", T.filter(r=>r[2]).sort((a,b)=>a[8]/a[2]-b[8]/b[2]||(cs[b[0]]||0)-(cs[a[0]]||0)).slice(0,15), [["Team",r=>tm(r[0],r[1]),"l"],["P",r=>r[2]],["GA",r=>r[8]],["Per game",r=>`<b>${per(r[8],r[2])}</b>`],["Clean sheets",r=>cs[r[0]]||0]])}
    ${lead("Clean sheets (goalkeepers)", top(P,r=>r[7]), [["Player",pl,"l"],["Team",pt,"l hide-sm"],["GP",r=>r[2]],["CS",r=>`<b>${fmtCS(r[7])}</b>`]])}
    ${lead("Discipline", top(P,r=>r[5]+r[6]*3,15), [["Player",pl,"l"],["Team",pt,"l hide-sm"],["Yellow",r=>r[5]],["Red",r=>r[6]]])}
-   ${lead("Team discipline", Object.values(TD).filter(t=>t[1]+t[2]>0).map(t=>[...t,(t[1]+t[2])/(tp[t[0]]||1)]).sort((a,b)=>b[3]-a[3]||(b[1]+b[2])-(a[1]+a[2])||b[2]-a[2]).slice(0,15), [["Team",r=>tm(r[0]),"l"],["Yellow",r=>r[1]],["Red",r=>r[2]],["Cards per game",r=>`<b>${per(r[1]+r[2],tp[r[0]]||0)}</b>`]])}
+   ${lead("Team discipline", Object.values(TD).filter(t=>t[1]+t[2]>0&&t[3]>0).map(t=>[...t,(t[1]+t[2])/t[3]]).sort((a,b)=>b[4]-a[4]||(b[1]+b[2])-(a[1]+a[2])||b[2]-a[2]).slice(0,15), [["Team",r=>tm(r[0]),"l"],["GP",r=>r[3]],["Yellow",r=>r[1]],["Red",r=>r[2]],["Cards per game",r=>`<b>${per(r[1]+r[2],r[3])}</b>`]])}
   </div>`;
 }
 
