@@ -229,7 +229,7 @@ def merge(seasons, sheet_text, cards_text):
         score = g[5] if key[2] == "h" else g[6]
         if score not in ("", None) and goals > int(score):
             review["Reported goals higher than the team's score (check for duplicates or a wrong game)"].append(
-                f'{where(seasons, key)}: {goals} goals reported, score shows {score} ({meta.get(key, 0)} submission(s))')
+                f"{where(seasons, key)}: {int(goals)} goals reported, score shows {score} ({meta.get(key, 0)} submission(s))")
     # ---- box scores and totals
     box = collections.defaultdict(dict)
     totals = collections.defaultdict(dict)
