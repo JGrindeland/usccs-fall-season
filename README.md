@@ -9,3 +9,5 @@ Live at https://2026-usccs-fall-season.netlify.app/ (embedded on collegeclubsocc
 On-demand refresh: Actions tab → "Refresh season data" → Run workflow.
 
 Display rules: games marked "In progress" in SportsEngine show as Final on the schedule but are not counted in standings (SportsEngine's own standings already exclude them). "TBD" placeholder rows are removed from standings. CSU San Marcos uses the logo in `assets/csusm_logo.webp`.
+
+Netlify site: 2026-usccs-fall-season (publishes `site/` from `main`).
