@@ -50,7 +50,7 @@ for s in raw["seasons"]:
         d = divname.get(n["div"], "")
         rows = [[name2team.get(norm(r[0]), -1), r[0]] + [r[k] or 0 for k in (1, 2, 3, 4, 7, 5, 6, 8, 9, 10)] for r in n["rows"] if norm(r[0]) not in DROP_STANDINGS]
         stand.append([dix.get(d, -1), rows])     # rows: team, name, P W L D GD GF GA Pts YC RC
-    # season player totals: per player, each stat = the higher of SportsEngine's total and the stat-sheet total (never added)
+    # season player totals: goals/assists = the higher of SportsEngine's total and the stat-sheet total (never added); cards = misconduct CSV only
     merged = collections.defaultdict(list)
     for (tk, pk), t in TOT.get(s["key"], {}).items():
         merged[name2team.get(tk, name2team.get(norm(t[1]), -1))].append(t)
@@ -61,7 +61,7 @@ for s in raw["seasons"]:
         m = next((t for t in merged.get(ti, []) if id(t) not in used and statmerge.same_person(t[0], p[0])), None)
         if m: used.add(id(m))
         mt = m or [p[0], "", 0, 0, 0, 0, 0.0, 0]
-        players.append([p[0], ti, max(p[2], mt[7]), max(p[3], mt[2]), max(p[4], mt[3]), max(p[5], mt[4]), max(p[6], mt[5]), round(mt[6], 2)])
+        players.append([p[0], ti, max(p[2], mt[7]), max(p[3], mt[2]), max(p[4], mt[3]), mt[4], mt[5], round(mt[6], 2)])   # cards: misconduct CSV only
     for ti, lst in merged.items():
         if ti < 0: continue
         for t in lst:
@@ -220,7 +220,7 @@ footer{font-family:IndBook,Arial,sans-serif;color:var(--muted);font-size:12px;pa
   </div>
   <div id="view"></div>
 </main>
-<footer class="wrap">Schedules, results and standings from SportsEngine; goal difference follows SportsEngine's standings settings. Goals, assists and clean sheets also come from USCCS team stat reports, and cards from the misconduct record. Each player's season numbers use the higher of SportsEngine and those reports, so nothing is counted twice.</footer>
+<footer class="wrap">Schedules, results and standings from SportsEngine; goal difference follows SportsEngine's standings settings. Goals, assists and clean sheets also come from USCCS team stat reports, and cards only from the misconduct record. Each player's goals and assists use the higher of SportsEngine and those reports, so nothing is counted twice.</footer>
 <script>
 const DATA = __DATA__;
 const S = {g:0, tab:"stand", div:"", team:"", q:"", order:"asc", limit:120, open:new Set()};

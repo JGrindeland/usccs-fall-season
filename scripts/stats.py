@@ -10,17 +10,19 @@ Rules (agreed with Jordan, Nov 23 2026)
     for double-headers; a date 1-2 days off is accepted when nothing matches on the day).
   * A team that submitted more than once for a game: per player and event type, the highest count from any
     one submission is used (repeat submissions are not added together).
-  * Cards: the misconduct CSV is the record. A self-reported card from the sheet is used only when the CSV has
-    no card of the same type for that player in that game (it would be a duplicate otherwise).
+  * Cards come only from the misconduct CSV; self-reported cards in the sheet are ignored.
+  * SportsEngine's score is the record: if a team reports more goals than it scored, the extra goals are dropped
+    (last-reported scorers first).
   * Season totals never double count SportsEngine: per player, each stat is the higher of SportsEngine's season
     total and the total from these reports.
-Anything that can't be matched, or a team-game whose reported goals exceed its score, goes to data/review.md.
+Anything that can't be matched goes to data/review.md.
 """
 import csv, io, re, datetime, collections
 from zoneinfo import ZoneInfo
 
 norm = lambda n: re.sub(r"[^a-z0-9]", "", (n or "").lower())
 NATIONALS = (datetime.date(2026, 11, 11), datetime.date(2026, 11, 15))
+IGNORE_CARDS = {(datetime.date(2026, 10, 18), "virginia", "eliaszell")}   # Jordan, Nov 23: ignore
 YELLOW_REASONS = {"unsporting behavior", "dissent", "delaying the restart", "persistent offense",
                   "entering/leaving field of play", "failure to respect distance"}
 
@@ -184,8 +186,7 @@ def merge(seasons, sheet_text, cards_text):
             for k, v in c.items():
                 e[k] = v
         meta[key] = len(by_sub)
-    # ---- cards CSV is the record; sheet cards only where the CSV has none of that type for that player/game
-    sheet_cards = {k: {p: (e["yc"], e["rc"]) for p, e in v.items()} for k, v in events.items()}
+    # ---- cards come only from the misconduct CSV; self-reported cards in the sheet are ignored (Jordan, Nov 23)
     for v in events.values():
         for e in v.values():
             e["yc"] = e["rc"] = 0
@@ -201,6 +202,8 @@ def merge(seasons, sheet_text, cards_text):
         if not m and pdate(c["date"]) and NATIONALS[0] <= pdate(c["date"]) <= NATIONALS[1]:
             nationals += 1      # National Championship cards aren't regular season
             continue
+        if (pdate(c["date"]), norm(c["team"]), norm(c["name"])) in IGNORE_CARDS:
+            continue
         if not m:
             review["Cards (CSV) that don't match a SportsEngine game"].append(f'{c["date"]} {c["team"]}: {c["name"]} – {c["reason"]}')
             continue
@@ -212,24 +215,19 @@ def merge(seasons, sheet_text, cards_text):
             if not e["name"]:
                 e["name"] = c["name"]
             e[c["type"]] += 1
-    used_sheet_cards = 0
-    for key, per in sheet_cards.items():
-        for p, (yc, rc) in per.items():
-            e = events[key][p]
-            if yc and not e["yc"]:
-                e["yc"] = yc; used_sheet_cards += int(yc)
-                review["Self-reported cards counted (not in the misconduct CSV)"].append(f'{e["name"]} ({where(seasons, key)}) – yellow')
-            if rc and not e["rc"]:
-                e["rc"] = rc; used_sheet_cards += int(rc)
-                review["Self-reported cards counted (not in the misconduct CSV)"].append(f'{e["name"]} ({where(seasons, key)}) – red')
     # ---- goals vs score check
+    trimmed = 0
     for key, per in events.items():
         goals = sum(e["g"] for e in per.values())
         s = next(x for x in seasons if x["key"] == key[0]); g = s["games"][key[1]]
         score = g[5] if key[2] == "h" else g[6]
         if score not in ("", None) and goals > int(score):
-            review["Reported goals higher than the team's score (check for duplicates or a wrong game)"].append(
-                f"{where(seasons, key)}: {int(goals)} goals reported, score shows {score} ({meta.get(key, 0)} submission(s))")
+            # SportsEngine's score is the record: drop the extra goals, last-reported scorers first
+            extra = int(goals) - int(score); trimmed += extra
+            for e in reversed(list(per.values())):
+                take = min(extra, int(e["g"])); e["g"] -= take; extra -= take
+                if not extra:
+                    break
     # ---- box scores and totals
     box = collections.defaultdict(dict)
     totals = collections.defaultdict(dict)
@@ -254,7 +252,8 @@ def merge(seasons, sheet_text, cards_text):
     for (season, *k), gs in games_played.items():
         totals[season][tuple(k)][7] = len(gs)
     review["_summary"] = [f"{sum(len(v) for v in subs.values())} stat submissions matched to {len(subs)} team-games; "
-                          f"{sum(len(v) for v in csv_cards.values())} CSV cards matched ({nationals} National Championship cards left out); {used_sheet_cards} self-reported cards counted"]
+                          f"{sum(len(v) for v in csv_cards.values())} CSV cards matched ({nationals} National Championship cards left out); "
+                          f"{trimmed} reported goals above SportsEngine's score dropped"]
     return box, totals, review
 
 
