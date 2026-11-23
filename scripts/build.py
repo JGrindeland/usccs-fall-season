@@ -18,7 +18,6 @@ DROP_STANDINGS = {"tbd"}   # placeholder rows removed from standings (e.g. Men M
 PL = json.load(open(HERE / "players.json"))   # re-pulled one team at a time (stable paging)
 _read = lambda n: (HERE / n).read_text(encoding="utf-8") if (HERE / n).exists() else ""
 BOX, TOT, REVIEW = statmerge.merge(raw["seasons"], _read("sheet_stats.csv"), _read("cards.csv"))   # USCCS stat sheet + misconduct CSV
-(HERE / "review.md").write_text(statmerge.review_markdown(REVIEW))
 
 
 # ---------- compact the data ----------
@@ -50,6 +49,31 @@ for s in raw["seasons"]:
         d = divname.get(n["div"], "")
         rows = [[name2team.get(norm(r[0]), -1), r[0]] + [r[k] or 0 for k in (1, 2, 3, 4, 7, 5, 6, 8, 9, 10)] for r in n["rows"] if norm(r[0]) not in DROP_STANDINGS]
         stand.append([dix.get(d, -1), rows])     # rows: team, name, P W L D GD GF GA Pts YC RC
+    # Rule (Jordan, Nov 23): a game between teams from different standings tables (e.g. Rocky Mountain vs Southwest)
+    # doesn't count in either table. SportsEngine counts "Final" ones, so take them back out of its rows.
+    # ("In progress" games are already left out by SportsEngine.)
+    rowof = {r[0]: r for _, rows in stand for r in rows if r[0] >= 0}
+    touched = set()
+    for g in s["games"]:
+        if g[2] != "completed" or g[5] == "" or g[6] == "" or g[3] not in tix or g[4] not in tix: continue
+        dh, da = s["teams"][g[3]][1], s["teams"][g[4]][1]
+        if dh == da or not dh or not da: continue
+        hs, as_ = int(g[5]), int(g[6])
+        REVIEW["Cross-division games left out of standings (they still show on the schedule)"].append(
+            f"{g[0][:10]} {s['teams'][g[3]][0]} ({divname.get(dh, '?').strip()}) {hs}–{as_} {s['teams'][g[4]][0]} ({divname.get(da, '?').strip()})")
+        for tid, gf, ga in ((g[3], hs, as_), (g[4], as_, hs)):
+            r = rowof.get(tix[tid])
+            if not r or r[2] <= 0: continue
+            draw_pts = (r[9] - 3 * r[3]) / r[5] if r[5] else 1          # follows the table's own points for a draw
+            r[2] -= 1; r[7] -= gf; r[8] -= ga; r[6] -= max(-5, min(5, gf - ga))
+            if gf > ga: r[3] -= 1; r[9] -= 3
+            elif gf < ga: r[4] -= 1
+            else: r[5] -= 1; r[9] -= draw_pts
+            r[9] = int(round(r[9])); touched.add(id(r))
+    for blk in stand:
+        if any(id(r) in touched for r in blk[1]):
+            order = {id(r): i for i, r in enumerate(blk[1])}
+            blk[1].sort(key=lambda r: (-r[9], -r[6], -r[7], order[id(r)]))   # Pts, GD, GF, then SportsEngine's order
     # season player totals: goals/assists = the higher of SportsEngine's total and the stat-sheet total (never added); cards = misconduct CSV only
     merged = collections.defaultdict(list)
     for (tk, pk), t in TOT.get(s["key"], {}).items():
@@ -86,6 +110,7 @@ for s in raw["seasons"]:
                            "divs": divs, "teams": teams, "tz": tzs, "games": games, "stand": stand, "players": players,
                            "tcards": {str(k): v for k, v in tcards.items() if v[0] or v[1] or v[2]}})
 
+(HERE / "review.md").write_text(statmerge.review_markdown(REVIEW))
 DATA = json.dumps(out, separators=(",", ":"))
 pulled = datetime.datetime.fromisoformat(raw["pulled"].replace("Z", "+00:00")).astimezone(__import__("zoneinfo").ZoneInfo("America/Chicago"))
 UPDATED = pulled.strftime("%b %-d, %Y, %-I:%M %p %Z")

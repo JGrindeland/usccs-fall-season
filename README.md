@@ -14,6 +14,7 @@ Stats from USCCS reports:
 - Cards come only from the CSV (self-reported cards in the sheet are ignored). SportsEngine's score is the record: reported goals above a team's score are dropped. Repeat submissions for a team-game aren't added together (per player, the highest count in any one submission). Each player's season numbers take the higher of SportsEngine and these reports.
 - `data/review.md` lists anything that couldn't be matched.
 
-Display rules: games marked "In progress" in SportsEngine show as Final on the schedule but are not counted in standings (SportsEngine's own standings already exclude them). "TBD" placeholder rows are removed from standings. CSU San Marcos uses the logo in `assets/csusm_logo.webp`.
+Display rules:
+- A game between teams from different standings tables (e.g. Rocky Mountain vs Southwest) doesn't count in standings; it still shows on the schedule. SportsEngine counts these when they're Final, so the build takes them back out (listed in `data/review.md`). games marked "In progress" in SportsEngine show as Final on the schedule but are not counted in standings (SportsEngine's own standings already exclude them). "TBD" placeholder rows are removed from standings. CSU San Marcos uses the logo in `assets/csusm_logo.webp`.
 
 Netlify site: 2026-usccs-fall-season (publishes `site/` from `main`).
