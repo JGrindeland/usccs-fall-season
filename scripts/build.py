@@ -49,31 +49,56 @@ for s in raw["seasons"]:
         d = divname.get(n["div"], "")
         rows = [[name2team.get(norm(r[0]), -1), r[0]] + [r[k] or 0 for k in (1, 2, 3, 4, 7, 5, 6, 8, 9, 10)] for r in n["rows"] if norm(r[0]) not in DROP_STANDINGS]
         stand.append([dix.get(d, -1), rows])     # rows: team, name, P W L D GD GF GA Pts YC RC
-    # Rule (Jordan, Nov 23): a game between teams from different standings tables (e.g. Rocky Mountain vs Southwest)
-    # doesn't count in either table. SportsEngine counts "Final" ones, so take them back out of its rows.
-    # ("In progress" games are already left out by SportsEngine.)
+    # Standings are computed from the game results (Jordan, Nov 23), not taken from SportsEngine's table,
+    # which can be stale (it still counted e.g. Butler 3-0 Cleveland State after that game went back to "in progress").
+    #  * only games marked Final ("completed") with both scores count; "in progress", scheduled/delayed-with-score don't
+    #  * a game between teams from different standings tables (e.g. Rocky Mountain vs Southwest) doesn't count
+    #  * 3 points for a win, 1 for a draw; GD capped at 5 per game (SportsEngine's setting)
+    #  * order: points, head-to-head points among tied teams, goal difference, goals for, then name
+    for _, rows in stand:
+        for r in rows: r[2:12] = [0] * 10
     rowof = {r[0]: r for _, rows in stand for r in rows if r[0] >= 0}
-    touched = set()
+    divblk = {blk[0]: blk for blk in stand}
+    h2h = collections.defaultdict(list)
     for g in s["games"]:
-        if g[2] != "completed" or g[5] == "" or g[6] == "" or g[3] not in tix or g[4] not in tix: continue
+        if g[3] not in tix or g[4] not in tix or g[5] == "" or g[6] == "": continue
         dh, da = s["teams"][g[3]][1], s["teams"][g[4]][1]
-        if dh == da or not dh or not da: continue
+        if g[2] != "completed":
+            if g[2] not in ("in_progress", "cancelled", "postponed"):
+                REVIEW["Games with a score but not marked Final in SportsEngine (left out of standings)"].append(
+                    f"{g[0][:10]} {s['teams'][g[3]][0]} {g[5]}–{g[6]} {s['teams'][g[4]][0]} ({g[2]})")
+            continue
         hs, as_ = int(g[5]), int(g[6])
-        REVIEW["Cross-division games left out of standings (they still show on the schedule)"].append(
-            f"{g[0][:10]} {s['teams'][g[3]][0]} ({divname.get(dh, '?').strip()}) {hs}–{as_} {s['teams'][g[4]][0]} ({divname.get(da, '?').strip()})")
+        if dh != da:
+            REVIEW["Cross-division games left out of standings (they still show on the schedule)"].append(
+                f"{g[0][:10]} {s['teams'][g[3]][0]} ({divname.get(dh, '?').strip()}) {hs}–{as_} {s['teams'][g[4]][0]} ({divname.get(da, '?').strip()})")
+            continue
         for tid, gf, ga in ((g[3], hs, as_), (g[4], as_, hs)):
-            r = rowof.get(tix[tid])
-            if not r or r[2] <= 0: continue
-            draw_pts = (r[9] - 3 * r[3]) / r[5] if r[5] else 1          # follows the table's own points for a draw
-            r[2] -= 1; r[7] -= gf; r[8] -= ga; r[6] -= max(-5, min(5, gf - ga))
-            if gf > ga: r[3] -= 1; r[9] -= 3
-            elif gf < ga: r[4] -= 1
-            else: r[5] -= 1; r[9] -= draw_pts
-            r[9] = int(round(r[9])); touched.add(id(r))
-    for blk in stand:
-        if any(id(r) in touched for r in blk[1]):
-            order = {id(r): i for i, r in enumerate(blk[1])}
-            blk[1].sort(key=lambda r: (-r[9], -r[6], -r[7], order[id(r)]))   # Pts, GD, GF, then SportsEngine's order
+            ti = tix[tid]; r = rowof.get(ti)
+            if r is None:     # team missing from SportsEngine's table: add it to its division's table
+                blk = divblk.get(dix.get(divname.get(dh, "").strip(), -1))
+                if blk is None: continue
+                r = [ti, s["teams"][tid][0]] + [0] * 10; blk[1].append(r); rowof[ti] = r
+            r[2] += 1; r[7] += gf; r[8] += ga; r[6] += max(-5, min(5, gf - ga))
+            if gf > ga: r[3] += 1; r[9] += 3
+            elif gf < ga: r[4] += 1
+            else: r[5] += 1; r[9] += 1
+        h2h[dh].append((tix[g[3]], tix[g[4]], hs, as_))
+    for d_i, rows in stand:
+        games_here = h2h.get(next((k for k, v in divname.items() if v.strip() == (divs[d_i] if d_i >= 0 else None)), None), [])
+        by_pts = collections.defaultdict(list)
+        for r in rows: by_pts[r[9]].append(r)
+        ordered = []
+        for pts in sorted(by_pts, reverse=True):
+            grp = by_pts[pts]
+            if len(grp) > 1:
+                ids = {r[0] for r in grp}; hp = collections.Counter()
+                for a, b, x, y in games_here:
+                    if a in ids and b in ids:
+                        hp[a] += 3 if x > y else 1 if x == y else 0; hp[b] += 3 if y > x else 1 if x == y else 0
+                grp.sort(key=lambda r: (-hp[r[0]], -r[6], -r[7], r[1]))
+            ordered += grp
+        rows[:] = ordered
     # season player totals: goals/assists = the higher of SportsEngine's total and the stat-sheet total (never added); cards = misconduct CSV only
     merged = collections.defaultdict(list)
     for (tk, pk), t in TOT.get(s["key"], {}).items():
@@ -103,9 +128,7 @@ for s in raw["seasons"]:
             if g[2] in ("completed", "in_progress") and g[5] != "" and g[6] != "": t[2] += 1
             if g[2] == "in_progress": inprog[tix[tid]] += 1
             for r in b.get(side, []): t[0] += r[3]; t[1] += r[4]
-    stP = {r[0]: r[2] for _, rows in stand for r in rows if r[0] >= 0}
-    for t, v in tcards.items():
-        if t in stP: v[2] = stP[t] + inprog[t]      # SportsEngine's games played + the "in progress" games it leaves out
+    # games played for discipline = every scored game marked Final or "in progress" (cross-division included)
     out["seasons"].append({"key": s["key"], "label": "Men" if s["key"] == "men" else "Women", "name": s["name"],
                            "divs": divs, "teams": teams, "tz": tzs, "games": games, "stand": stand, "players": players,
                            "tcards": {str(k): v for k, v in tcards.items() if v[0] or v[1] or v[2]}})

@@ -15,6 +15,6 @@ Stats from USCCS reports:
 - `data/review.md` lists anything that couldn't be matched.
 
 Display rules:
-- A game between teams from different standings tables (e.g. Rocky Mountain vs Southwest) doesn't count in standings; it still shows on the schedule. SportsEngine counts these when they're Final, so the build takes them back out (listed in `data/review.md`). games marked "In progress" in SportsEngine show as Final on the schedule but are not counted in standings (SportsEngine's own standings already exclude them). "TBD" placeholder rows are removed from standings. CSU San Marcos uses the logo in `assets/csusm_logo.webp`.
+- Standings are computed from game results, not copied from SportsEngine's table (which can be stale): only games marked Final with both scores count; games between teams from different standings tables (e.g. Rocky Mountain vs Southwest) don't count; 3/1/0 points, GD capped at 5 per game; order = points, head-to-head points, GD, GF. Left-out games are listed in `data/review.md`. games marked "In progress" in SportsEngine show as Final on the schedule but are not counted in standings (SportsEngine's own standings already exclude them). "TBD" placeholder rows are removed from standings. CSU San Marcos uses the logo in `assets/csusm_logo.webp`.
 
 Netlify site: 2026-usccs-fall-season (publishes `site/` from `main`).
