@@ -4,7 +4,7 @@ Live at https://2026-usccs-fall-season.netlify.app/ (embedded on collegeclubsocc
 
 - `scripts/pull.py` pulls schedules, results, standings and player stats from SportsEngine's public season-microsite feed.
 - `scripts/build.py` builds `site/index.html` (fonts, crest and team logos are embedded).
-- `.github/workflows/refresh.yml` runs both every 30 minutes and commits only when something changed; Netlify deploys each commit.
+- `.github/workflows/refresh.yml` runs both every 10 minutes (GitHub may run scheduled jobs late) and commits only when something changed; Netlify deploys each commit.
 
 On-demand refresh: Actions tab → "Refresh season data" → Run workflow.
 

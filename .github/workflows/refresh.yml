@@ -2,10 +2,10 @@ name: Refresh season data
 
 on:
   schedule:
-    - cron: "7,37 * * * *"     # every 30 minutes
+    - cron: "3,13,23,33,43,53 * * * *"   # every 10 minutes (GitHub often delays or skips scheduled runs, so ask often)
   workflow_dispatch:            # "Run workflow" button for an on-demand refresh
   push:
-    paths: ["scripts/**", "assets/**", "data/cards.csv"]
+    paths: ["scripts/**", "assets/**", "data/cards.csv", ".github/workflows/**"]
 
 permissions:
   contents: write
