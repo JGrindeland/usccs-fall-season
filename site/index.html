@@ -272,10 +272,10 @@ function rosters(){
   const st = {}; for (const p of s.players) st[p[1]+"|"+nkey(p[0])] = p;
   const line = (t, r) => { const p = st[t+"|"+nkey(r[0])]; return [r[1], r[0], p ? Math.max(p[2], r[2]||0) : (r[2]||0), p?p[3]:0, p?p[4]:0, p?p[5]:0, p?p[6]:0]; };
   const sortRows = rows => rows.sort((a,b)=> (a[0]===""?1e9:+a[0]||1e9)-(b[0]===""?1e9:+b[0]||1e9) || a[1].split(" ").pop().localeCompare(b[1].split(" ").pop()) || a[1].localeCompare(b[1]));
-  const card = t => { const rows = sortRows((R[t]||[]).map(r=>line(+t,r)));
+  const card = t => { const rows = sortRows((R[t]||[]).map(r=>line(+t,r))); const nums = rows.some(r=>r[0]!=="");
     return `<section class="card"><h3><span class="tm">${logo(+t)}<span>${esc(s.teams[+t][0])}</span></span><small>${rows.length} players</small></h3><div class="tw"><table>
-      <thead><tr><th>#</th><th class="l">Player</th><th>GP</th><th>G</th><th>A</th><th class="hide-sm">YC</th><th class="hide-sm">RC</th></tr></thead><tbody>
-      ${rows.length?rows.map(r=>`<tr class="${S.q&&matchQ(r[1])?"me":""}"><td class="rk">${esc(r[0])}</td><td class="l" style="font-family:IndDemi,Arial,sans-serif">${esc(r[1])}</td><td>${r[2]}</td><td>${r[3]||""}</td><td>${r[4]||""}</td><td class="hide-sm">${r[5]||""}</td><td class="hide-sm">${r[6]||""}</td></tr>`).join(""):`<tr><td colspan="7" class="empty">No roster posted in SportsEngine.</td></tr>`}
+      <thead><tr>${nums?"<th>#</th>":""}<th class="l">Player</th><th>GP</th><th>G</th><th>A</th><th class="hide-sm">YC</th><th class="hide-sm">RC</th></tr></thead><tbody>
+      ${rows.length?rows.map(r=>`<tr class="${S.q&&matchQ(r[1])?"me":""}">${nums?`<td class="rk">${esc(r[0])}</td>`:""}<td class="l" style="font-family:IndDemi,Arial,sans-serif">${esc(r[1])}</td><td>${r[2]}</td><td>${r[3]||""}</td><td>${r[4]||""}</td><td class="hide-sm">${r[5]||""}</td><td class="hide-sm">${r[6]||""}</td></tr>`).join(""):`<tr><td colspan="7" class="empty">No roster posted in SportsEngine.</td></tr>`}
       </tbody></table></div></section>`; };
   let teamsShown = Object.keys(s.teams).filter(t=>(S.div===""||teamDiv(+t)==+S.div)&&(S.team===""||+t==+S.team));
   if (S.q) teamsShown = teamsShown.filter(t=>matchQ(s.teams[+t][0])||(R[t]||[]).some(r=>matchQ(r[0])));
@@ -284,7 +284,7 @@ function rosters(){
     return `<p class="note">${total.toLocaleString()} players on ${Object.keys(R).length} ${esc(s.label.toLowerCase())}'s rosters. Choose a division or team above, or search for a player.</p>`;
   if (!teamsShown.length) return `<div class="empty">No rosters match these filters.</div>`;
   teamsShown.sort((a,b)=>s.teams[+a][0].localeCompare(s.teams[+b][0]));
-  return `<p class="note">Roster as listed in SportsEngine. GP, goals, assists and cards are season totals; jersey numbers show where teams entered them.</p><div class="grid">${teamsShown.slice(0,40).map(card).join("")}</div>${teamsShown.length>40?`<p class="note">Showing 40 of ${teamsShown.length} teams. Narrow the search to see more.</p>`:""}`;
+  return `<p class="note">Roster as listed in SportsEngine. GP, goals, assists and cards are season totals; jersey numbers appear once teams enter them in SportsEngine.</p><div class="grid">${teamsShown.slice(0,40).map(card).join("")}</div>${teamsShown.length>40?`<p class="note">Showing 40 of ${teamsShown.length} teams. Narrow the search to see more.</p>`:""}`;
 }
 function render(){
   $("#fWhen").style.display = S.tab==="sched" ? "" : "none";
