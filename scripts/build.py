@@ -16,6 +16,8 @@ norm = lambda n: re.sub(r"[^a-z0-9]", "", n.lower())
 LOGO_OVERRIDE = {"csusanmarcos": "data:image/webp;base64," + b64(ASSETS / "csusm_logo.webp")}   # supplied by Jordan, Nov 23
 DROP_STANDINGS = {"tbd"}   # placeholder rows removed from standings (e.g. Men Midwest South)
 PL = json.load(open(HERE / "players.json"))   # re-pulled one team at a time (stable paging)
+ROST = json.loads((HERE / "rosters.json").read_text()) if (HERE / "rosters.json").exists() else {}   # every rostered player, from SportsEngine
+ROSTERS_OUT = {}
 _read = lambda n: (HERE / n).read_text(encoding="utf-8") if (HERE / n).exists() else ""
 BOX, TOT, REVIEW = statmerge.merge(raw["seasons"], _read("sheet_stats.csv"), _read("cards.csv"))   # USCCS stat sheet + misconduct CSV
 
@@ -129,6 +131,11 @@ for s in raw["seasons"]:
             if g[2] == "in_progress": inprog[tix[tid]] += 1
             for r in b.get(side, []): t[0] += r[3]; t[1] += r[4]
     # games played for discipline = every scored game marked Final or "in progress" (cross-division included)
+    rost = collections.defaultdict(list)
+    for nm, tnm, jersey, gp in ROST.get(s["key"], []):
+        ti = name2team.get(norm(tnm))
+        if ti is not None and ti >= 0: rost[ti].append([nm, jersey, gp])
+    ROSTERS_OUT[s["key"]] = {str(k): v for k, v in rost.items()}
     out["seasons"].append({"key": s["key"], "label": "Men" if s["key"] == "men" else "Women", "name": s["name"],
                            "divs": divs, "teams": teams, "tz": tzs, "games": games, "stand": stand, "players": players,
                            "tcards": {str(k): v for k, v in tcards.items() if v[0] or v[1] or v[2]}})
@@ -260,7 +267,7 @@ footer{font-family:IndBook,Arial,sans-serif;color:var(--muted);font-size:12px;pa
 <header class="band"><div class="wrap">
   <img class="crest" src="data:image/png;base64,__CREST__" alt="USCCS crest">
   <div><div class="kick">US College Club Soccer</div><h1>2026 Fall Regular Season</h1>
-  <div class="sub">Schedules · Results · Standings · Stats</div>
+  <div class="sub">Schedules · Results · Standings · Stats · Rosters</div>
   <div class="upd">Data from SportsEngine · last change __UPDATED__</div></div>
 </div></header>
 <div class="bar"><div class="wrap">
@@ -271,6 +278,7 @@ footer{font-family:IndBook,Arial,sans-serif;color:var(--muted);font-size:12px;pa
     <button role="tab" data-t="stand" aria-selected="true">Standings</button>
     <button role="tab" data-t="sched" aria-selected="false">Schedule &amp; Results</button>
     <button role="tab" data-t="stats" aria-selected="false">Stats</button>
+    <button role="tab" data-t="rost" aria-selected="false">Rosters</button>
   </div>
 </div></div>
 <main class="wrap">
@@ -401,9 +409,36 @@ function stats(){
   </div>`;
 }
 
+let ROS = null, rosLoading = false, rosFail = false;
+const nkey = n => String(n||"").toLowerCase().replace(/[^a-z0-9]/g,"");
+function rosters(){
+  if (!ROS){
+    if (!rosLoading && !rosFail){ rosLoading = true;
+      fetch("rosters.json").then(r=>{ if(!r.ok) throw 0; return r.json(); }).then(j=>{ ROS=j; rosLoading=false; if(S.tab==="rost") render(); })
+        .catch(()=>{ rosFail=true; rosLoading=false; if(S.tab==="rost") render(); }); }
+    return `<div class="empty">${rosFail ? "Rosters couldn't load. Refresh the page to try again." : "Loading rosters…"}</div>`;
+  }
+  const s = sea(), R = ROS[s.key] || {};
+  const st = {}; for (const p of s.players) st[p[1]+"|"+nkey(p[0])] = p;
+  const line = (t, r) => { const p = st[t+"|"+nkey(r[0])]; return [r[1], r[0], p ? Math.max(p[2], r[2]||0) : (r[2]||0), p?p[3]:0, p?p[4]:0, p?p[5]:0, p?p[6]:0]; };
+  const sortRows = rows => rows.sort((a,b)=> (a[0]===""?1e9:+a[0]||1e9)-(b[0]===""?1e9:+b[0]||1e9) || a[1].split(" ").pop().localeCompare(b[1].split(" ").pop()) || a[1].localeCompare(b[1]));
+  const card = t => { const rows = sortRows((R[t]||[]).map(r=>line(+t,r)));
+    return `<section class="card"><h3><span class="tm">${logo(+t)}<span>${esc(s.teams[+t][0])}</span></span><small>${rows.length} players</small></h3><div class="tw"><table>
+      <thead><tr><th>#</th><th class="l">Player</th><th>GP</th><th>G</th><th>A</th><th class="hide-sm">YC</th><th class="hide-sm">RC</th></tr></thead><tbody>
+      ${rows.length?rows.map(r=>`<tr class="${S.q&&matchQ(r[1])?"me":""}"><td class="rk">${esc(r[0])}</td><td class="l" style="font-family:IndDemi,Arial,sans-serif">${esc(r[1])}</td><td>${r[2]}</td><td>${r[3]||""}</td><td>${r[4]||""}</td><td class="hide-sm">${r[5]||""}</td><td class="hide-sm">${r[6]||""}</td></tr>`).join(""):`<tr><td colspan="7" class="empty">No roster posted in SportsEngine.</td></tr>`}
+      </tbody></table></div></section>`; };
+  let teamsShown = Object.keys(s.teams).filter(t=>(S.div===""||teamDiv(+t)==+S.div)&&(S.team===""||+t==+S.team));
+  if (S.q) teamsShown = teamsShown.filter(t=>matchQ(s.teams[+t][0])||(R[t]||[]).some(r=>matchQ(r[0])));
+  const total = Object.values(R).reduce((a,v)=>a+v.length,0);
+  if (S.div==="" && S.team==="" && !S.q)
+    return `<p class="note">${total.toLocaleString()} players on ${Object.keys(R).length} ${esc(s.label.toLowerCase())}'s rosters. Choose a division or team above, or search for a player.</p>`;
+  if (!teamsShown.length) return `<div class="empty">No rosters match these filters.</div>`;
+  teamsShown.sort((a,b)=>s.teams[+a][0].localeCompare(s.teams[+b][0]));
+  return `<p class="note">Roster as listed in SportsEngine. GP, goals, assists and cards are season totals; jersey numbers show where teams entered them.</p><div class="grid">${teamsShown.slice(0,40).map(card).join("")}</div>${teamsShown.length>40?`<p class="note">Showing 40 of ${teamsShown.length} teams. Narrow the search to see more.</p>`:""}`;
+}
 function render(){
   $("#fWhen").style.display = S.tab==="sched" ? "" : "none";
-  $("#view").innerHTML = S.tab==="stand" ? standings() : S.tab==="sched" ? schedule() : stats();
+  $("#view").innerHTML = S.tab==="stand" ? standings() : S.tab==="sched" ? schedule() : S.tab==="rost" ? rosters() : stats();
   const m = $("#more"); if (m) m.onclick = () => { S.limit += 200; render(); };
 }
 document.addEventListener("click", e => {
@@ -429,4 +464,5 @@ html = (html.replace("__FBOOK__", F["Book"]).replace("__FMED__", F["Medium"]).re
         .replace("__CREST__", CREST).replace("__UPDATED__", UPDATED).replace("__DATA__", DATA))
 site = ROOT / "site"; site.mkdir(exist_ok=True)
 (site / "index.html").write_text(html)
+(site / "rosters.json").write_text(json.dumps(ROSTERS_OUT, separators=(",", ":")))   # loaded by the Rosters tab on demand
 print("built site/index.html", len(html))

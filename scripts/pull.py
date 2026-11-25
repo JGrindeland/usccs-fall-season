@@ -86,7 +86,7 @@ def pull(key, prog):
         standings.append({"div": (teams.get(tid) or [None, None])[1] or n.get("flight_id"), "rows": rows})
     with ThreadPoolExecutor(8) as ex:
         per_team = list(ex.map(lambda t: team_players(prog, t), season_team_ids))
-    seen, players = set(), []
+    seen, players, roster = set(), [], []
     for lst in per_team:
         for r in lst:
             if r["id"] in seen:
@@ -97,10 +97,13 @@ def pull(key, prog):
             row = [f"{r.get('first_name') or ''} {r.get('last_name') or ''}".strip(), r.get("team_name", ""), n("soigp"), n("soig"), n("soia"), n("soiyc"), n("soirc")]
             if row[3] or row[4] or row[5] or row[6]:
                 players.append(row)
+            if row[0]:   # every player on a season roster (SportsEngine keeps a stats line for each)
+                roster.append([row[0], row[1], str(r.get("jersey_number") or ""), row[2]])
     players.sort(key=lambda r: (r[1], r[0], r[2:]))
-    print(f"{key}: {len(divs)} divisions, {len(teams)} teams, {len(games)} games, {len(players)} players with stats", flush=True)
+    roster.sort(key=lambda r: (r[1], r[0], r[2], r[3]))
+    print(f"{key}: {len(divs)} divisions, {len(teams)} teams, {len(games)} games, {len(players)} players with stats, {len(roster)} rostered", flush=True)
     return {"key": key, "name": season["name"], "start": season["start_date"], "end": season["end_date"],
-            "divs": divs, "teams": teams, "games": games, "standings": standings}, players
+            "divs": divs, "teams": teams, "games": games, "standings": standings}, players, roster
 
 
 def update_logos(seasons):
@@ -126,10 +129,10 @@ def update_logos(seasons):
 
 
 def main():
-    seasons, players = [], {}
+    seasons, players, rosters = [], {}, {}
     for key, prog in SEASONS:
-        s, p = pull(key, prog)
-        seasons.append(s); players[key] = p
+        s, p, ro = pull(key, prog)
+        seasons.append(s); players[key] = p; rosters[key] = ro
     if sum(len(s["games"]) for s in seasons) == 0:
         sys.exit("No games returned; keeping the existing data.")
     changed = update_logos(seasons)
@@ -146,6 +149,11 @@ def main():
             d = json.loads(dpath.read_text()); d["pulled"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
             dpath.write_text(json.dumps(d, separators=(",", ":")))
         changed = True
+    rpath = DATA / "rosters.json"
+    new_r = json.dumps(rosters, separators=(",", ":"))
+    if sum(len(v) for v in rosters.values()) and (not rpath.exists() or rpath.read_text() != new_r):
+        rpath.write_text(new_r); changed = True
+        print("rosters updated", flush=True)
     # USCCS stat sheet (goals, assists, clean sheets, self-reported cards)
     try:
         sheet = get(STATS_SHEET, as_json=False).decode("utf-8-sig").replace("\r\n", "\n")   # normalize line endings so unchanged sheets compare equal
