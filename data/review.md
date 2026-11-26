@@ -4,7 +4,7 @@ Items from the stat sheet and the card CSV that need a look. The page updates on
 
 1311 stat submissions matched to 1251 team-games; 2479 CSV cards matched (521 National Championship cards left out); 11 reported goals above SportsEngine's score dropped
 
-## Stat reports that don't match a SportsEngine game (20)
+## Stat reports that don't match a SportsEngine game (32)
 
 - 11/11/2026 Cal Poly SLO vs St. Thomas (men): Cole Nicholson – Goals
 - 11/11/2026 Cal Poly SLO vs St. Thomas (men): Carlo Cintron – Goals
@@ -26,6 +26,18 @@ Items from the stat sheet and the card CSV that need a look. The page updates on
 - 11/14/2026 Cal Poly SLO vs BYU (men): Zachary Preucil – Goals
 - 11/14/2026 Cal Poly SLO vs BYU (men): Duke Romanchak – Assists
 - 11/14/2026 Cal Poly SLO vs BYU (men): Johnathan Negrin – Clean Sheets
+- 11/13/2026 Cincinnati vs Nebraska (men): Rye Russell – Goals
+- 11/13/2026 Cincinnati vs Nebraska (men): Elijah Corbin – Goals
+- 11/13/2026 Cincinnati vs Nebraska (men): Matthew Zinn – Assists
+- 11/13/2026 Cincinnati vs Nebraska (men): Rye Russell – Assists
+- 11/13/2026 Cincinnati vs Nebraska (men): Mason Ruggiero – Clean Sheets
+- 11/14/2026 Cincinnati vs Missouri State (men): Matthew Zinn – Goals
+- 11/14/2026 Cincinnati vs Missouri State (men): Sparsh Chand – Goals
+- 11/14/2026 Cincinnati vs Missouri State (men): Joey Pallone – Goals
+- 11/14/2026 Cincinnati vs Missouri State (men): Rye Russell – Assists
+- 11/14/2026 Cincinnati vs Missouri State (men): Mason Ruggiero – Assists
+- 11/14/2026 Cincinnati vs Missouri State (men): Kyler Hickey – Assists
+- 11/14/2026 Cincinnati vs Missouri State (men): Mason Ruggiero – Clean Sheets
 
 ## Cross-division games left out of standings (they still show on the schedule) (4)
 
