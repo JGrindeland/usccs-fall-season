@@ -2,7 +2,7 @@
 
 Items from the stat sheet and the card CSV that need a look. The page updates on the next refresh after a fix.
 
-1311 stat submissions matched to 1251 team-games; 2479 CSV cards matched (521 National Championship cards left out); 11 reported goals above SportsEngine's score dropped
+1312 stat submissions matched to 1252 team-games; 2479 CSV cards matched (521 National Championship cards left out); 11 reported goals above SportsEngine's score dropped
 
 ## Stat reports that don't match a SportsEngine game (32)
 
